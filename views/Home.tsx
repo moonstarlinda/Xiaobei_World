@@ -8,13 +8,11 @@ export const Home: React.FC = () => {
     <div className="space-y-12 animate-fade-in">
       {/* Hero Section */}
       <section className="flex flex-col md:flex-row items-center gap-8 md:gap-12 py-8">
-        <div className="w-48 h-48 md:w-64 md:h-64 rounded-full border-8 border-xiaobei-dark overflow-hidden flex-shrink-0 shadow-xl">
-          <img
-            src="https://placehold.co/400x400/F4E0C6/4A3B32?text=Xiaobei+Portrait"
-            alt="Xiaobei"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <img 
+          src="/images/avatar.png" 
+          alt="Xiaobei Avatar" 
+          className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-8 border-xiaobei-dark shadow-xl flex-shrink-0"
+        />
         <div className="text-center md:text-left space-y-4">
           <h1 className="text-4xl md:text-6xl font-bold text-xiaobei-dark tracking-tight">
             Hi, I'm <span className="underline decoration-wavy decoration-xiaobei-accent">Xiaobei</span>
