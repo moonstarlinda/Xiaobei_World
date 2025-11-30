@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MOCK_DIARY } from '../constants';
-import { BookOpen, ArrowRight } from 'lucide-react';
+import { BookOpen, ArrowRight, Book } from 'lucide-react';
 
 export const Home: React.FC = () => {
   return (
@@ -21,10 +21,13 @@ export const Home: React.FC = () => {
             I'm a plush tiger with a big heart and a love for cozy adventures. Welcome to my little corner of the internet!
           </p>
           <div className="pt-2 flex justify-center md:justify-start gap-4">
-             <Link to="/gallery" className="px-6 py-3 bg-xiaobei-dark text-xiaobei-light rounded-full font-bold hover:bg-opacity-90 transition-all transform hover:-translate-y-1 shadow-lg">
+             <Link to="/gallery" className="px-6 py-3 w-40 bg-xiaobei-dark text-xiaobei-light rounded-full font-bold hover:bg-opacity-90 transition-all transform hover:-translate-y-1 shadow-lg">
                 See Photos
              </Link>
-             <Link to="/chat" className="px-6 py-3 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all">
+             <Link to="/comics" className="px-6 py-3 w-40 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all">
+                Read Comics
+             </Link>
+             <Link to="/chat" className="px-6 py-3 w-40 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all">
                 Say Hello
              </Link>
           </div>

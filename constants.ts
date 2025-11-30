@@ -1,13 +1,6 @@
 import { Photo, DiaryEntry } from './types';
 
-export const MOCK_PHOTOS: Photo[] = [
-  { id: 1, url: 'https://placehold.co/600x400/F4E0C6/4A3B32?text=Xiaobei+Napping', desc: 'Nap time in the sun' },
-  { id: 2, url: 'https://placehold.co/600x600/F4E0C6/4A3B32?text=Xiaobei+Eating', desc: 'Enjoying a big meal' },
-  { id: 3, url: 'https://placehold.co/600x800/F4E0C6/4A3B32?text=Xiaobei+Adventure', desc: 'Exploring the backyard' },
-  { id: 4, url: 'https://placehold.co/600x400/F4E0C6/4A3B32?text=Xiaobei+Coding', desc: 'Helping with code' },
-  { id: 5, url: 'https://placehold.co/800x600/F4E0C6/4A3B32?text=Xiaobei+Friends', desc: 'With the plushie gang' },
-  { id: 6, url: 'https://placehold.co/600x400/F4E0C6/4A3B32?text=Xiaobei+Travel', desc: 'On a train trip' },
-];
+
 
 export const MOCK_DIARY: DiaryEntry[] = [
   {
