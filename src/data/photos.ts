@@ -7,24 +7,30 @@ export const photos: Photo[] = [
     desc: 'Xiaobei Wrapped in the Blanket'
   },
   {
-    id: 5,
+    id: 2,
     url: '/images/photo_with_Sailor_Moon.jpg',
     desc: 'XiaoBei With Sailor Moon~'
   },
   {
-    id: 2,
+    id: 3,
     url: '/images/photo_good_night_on_the_moon.jpg',
     desc: 'Good Night on the Moon'
   },
   {
-    id: 3,
-    url: '/images/photo_XiaoBei_and_his_friends.jpg',
-    desc: 'Xiaobei and His Friends'
+    id: 4,
+    url: '/images/photo_with_friends.png',
+    desc: 'With Friends'
   },
   {
-    id: 4,
-    url: '/images/photo_wearing_sisters_hat.jpg',
-    desc: 'Wearing Sister\'s Hat'
+    id: 5,
+    url: '/images/photo_lying_in_neural_nework_with_heart.jpg',
+    desc: 'Lying in Neural Network with Heart'
   },
+  {
+    id: 6,
+    url: '/images/photo_wearing_sisters_hat.png',
+    desc: 'Wearing Sister\'s Hat'
+  }
+  
   
 ];
