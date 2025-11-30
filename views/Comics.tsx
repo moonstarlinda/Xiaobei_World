@@ -63,20 +63,22 @@ export const Comics: React.FC = () => {
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/20 to-transparent z-10 rounded-l-sm"></div>
               </div>
 
-              {/* Title & Date (The Label) */}
-              <div className="z-10 mt-4 mb-4 text-center w-full px-1">
-                <h3 className="text-xiaobei-dark font-bold text-base md:text-lg leading-tight group-hover:text-xiaobei-accent transition-colors">
-                  {comic.title}
-                </h3>
-                <p className="text-xiaobei-dark/60 text-xs mt-1 font-mono">
-                  {comic.date}
-                </p>
-              </div>
-
               {/* The Wood Shelf Segment */}
               <div className="absolute bottom-0 left-0 right-0 h-6 bg-[#5D4037] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.3)] z-0">
                  {/* 3D Top Edge Highlight (Lighter Wood) */}
                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#8D6E63] border-b border-black/10"></div>
+              </div>
+              
+              {/* Title & Date (The Label) - Positioned below the shelf */}
+              <div className="z-10 mt-8 mb-4 text-center w-full px-2">
+                <div className="h-12 flex items-center justify-center mb-1">
+                  <h3 className="text-xiaobei-dark font-bold text-xl md:text-lg leading-snug group-hover:text-xiaobei-accent transition-colors line-clamp-2 text-center w-full">
+                    {comic.title}
+                  </h3>
+                </div>
+                <p className="text-xiaobei-dark/70 text-xs font-mono">
+                  {comic.date}
+                </p>
               </div>
             </div>
           ))}
