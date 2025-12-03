@@ -21,13 +21,13 @@ export const comics: Comic[] = [
   },
   {
     id: 4,
-    title: "Who moved my C drive?",
+    title: "Who Moved My C Drive?",
     date: "2025-11-30",
     imageUrl: "/images/comic_who_moved_my_C_drive_EN.png"
   },
   {
     id: 5,
-    title: "Who moved my C drive? (Chinese)",
+    title: "Who Moved My C Drive? (Chinese)",
     date: "2025-11-30",
     imageUrl: "/images/comic_who_moved_my_C_drive_CN.png"
   },
