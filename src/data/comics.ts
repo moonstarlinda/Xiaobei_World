@@ -30,6 +30,12 @@ export const comics: Comic[] = [
     title: "Who moved my C drive? (Chinese)",
     date: "2025-11-30",
     imageUrl: "/images/comic_who_moved_my_C_drive_CN.png"
+  },
+  {
+    id: 6,
+    title: "Aurora will Wait for Us",
+    date: "2025-12-03",
+    imageUrl: "/images/comic_Aurora_will_Wait_for_Us.png"
   }
 
   
