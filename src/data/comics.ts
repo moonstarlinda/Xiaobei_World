@@ -36,6 +36,12 @@ export const comics: Comic[] = [
     title: "Aurora will Wait for Us",
     date: "2025-12-03",
     imageUrl: "/images/comic_Aurora_will_Wait_for_Us.png"
+  },
+  {
+    id: 7,
+    title: "System Updating, Do Not Disturb",
+    date: "2025-12-04",
+    imageUrl: "/images/comic_System_Updating_Do_Not_Disturb.png"
   }
 
   
