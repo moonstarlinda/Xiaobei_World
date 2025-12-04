@@ -8,7 +8,7 @@ export const photos: Photo[] = [
   },
   {
     id: 2,
-    url: '/images/photo_with_Sailor_Moon.jpg',
+    url: '/images/photo_Xiaobei_with_Sailor_Moon.jpg',
     desc: 'XiaoBei With Sailor Moon~'
   },
   {
