@@ -19,15 +19,15 @@ export const Comics: React.FC = () => {
   }, [selectedComic]);
 
   return (
-    <div className="min-h-screen bg-stone-100 animate-fade-in pb-20 -mt-6 pt-10">
+    <div className="min-h-screen bg-stone-100 dark:bg-xiaobei-dark/95 animate-fade-in pb-20 -mt-6 pt-10">
       
       {/* Header */}
       <div className="text-center pb-16 space-y-3 px-4">
-        <h2 className="text-4xl font-bold text-xiaobei-dark flex items-center justify-center gap-3 drop-shadow-sm">
+        <h2 className="text-4xl font-bold text-xiaobei-dark dark:text-xiaobei-darktext flex items-center justify-center gap-3 drop-shadow-sm">
           <Book className="w-10 h-10" />
           The Comic Shelf
         </h2>
-        <p className="text-xiaobei-dark/80 font-medium text-lg">
+        <p className="text-xiaobei-dark/80 dark:text-xiaobei-darktext/80 font-medium text-lg">
           Flip through the pages of my daily adventures.
         </p>
       </div>
@@ -47,10 +47,10 @@ export const Comics: React.FC = () => {
               <div className="relative z-20 w-3/4 max-w-[180px] aspect-[4/5] transition-all duration-300 ease-out transform group-hover:-translate-y-3 group-hover:rotate-2 group-hover:scale-105">
                 
                 {/* White Border/Frame & Shadow */}
-                <div className="absolute inset-0 bg-white shadow-xl rounded-sm rotate-0 ring-1 ring-gray-200"></div>
+                <div className="absolute inset-0 bg-white shadow-xl rounded-sm rotate-0 ring-1 ring-gray-200 dark:ring-gray-700"></div>
                 
                 {/* Inner Image Container */}
-                <div className="absolute inset-2 overflow-hidden bg-gray-100">
+                <div className="absolute inset-2 overflow-hidden bg-gray-100 dark:bg-gray-800">
                   <img
                     src={comic.imageUrl}
                     alt={comic.title}
@@ -72,11 +72,11 @@ export const Comics: React.FC = () => {
               {/* Title & Date (The Label) - Positioned below the shelf */}
               <div className="z-10 mt-8 mb-4 text-center w-full px-2">
                 <div className="h-12 flex items-center justify-center mb-1">
-                  <h3 className="text-xiaobei-dark font-bold text-xl md:text-lg leading-snug group-hover:text-xiaobei-accent transition-colors line-clamp-2 text-center w-full">
+                  <h3 className="text-xiaobei-dark dark:text-xiaobei-darktext font-bold text-xl md:text-lg leading-snug group-hover:text-xiaobei-accent dark:group-hover:text-xiaobei-darkaccent transition-colors line-clamp-2 text-center w-full">
                     {comic.title}
                   </h3>
                 </div>
-                <p className="text-xiaobei-dark/70 text-xs font-mono">
+                <p className="text-xiaobei-dark/70 dark:text-xiaobei-darktext/70 text-xs font-mono">
                   {comic.date}
                 </p>
               </div>

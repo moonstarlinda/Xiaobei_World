@@ -52,10 +52,10 @@ export const Chat: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto h-[600px] flex flex-col bg-white rounded-3xl shadow-xl overflow-hidden border-4 border-xiaobei-dark animate-fade-in">
+    <div className="max-w-2xl mx-auto h-[600px] flex flex-col bg-white dark:bg-xiaobei-darkbg rounded-3xl shadow-xl overflow-hidden border-4 border-xiaobei-dark dark:border-xiaobei-darkaccent animate-fade-in">
       
       {/* Header */}
-      <div className="bg-xiaobei-dark p-4 flex items-center gap-3 shadow-md z-10">
+      <div className="bg-xiaobei-dark dark:bg-xiaobei-darkaccent p-4 flex items-center gap-3 shadow-md z-10">
         <div className="w-10 h-10 rounded-full bg-xiaobei-light flex items-center justify-center overflow-hidden border-2 border-white/50">
            <img src="https://placehold.co/100x100/F4E0C6/4A3B32?text=X" alt="Avatar" />
         </div>
@@ -69,7 +69,7 @@ export const Chat: React.FC = () => {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-grow p-4 overflow-y-auto bg-gray-50 space-y-4">
+      <div className="flex-grow p-4 overflow-y-auto bg-gray-50 dark:bg-xiaobei-dark space-y-4">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -78,19 +78,13 @@ export const Chat: React.FC = () => {
             <div className={`flex max-w-[80%] gap-2 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
               
               {/* Avatar Bubble */}
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${
-                msg.role === 'user' ? 'bg-xiaobei-accent' : 'bg-xiaobei-dark'
-              }`}>
-                {msg.role === 'user' ? <User className="w-5 h-5 text-xiaobei-dark" /> : <Bot className="w-5 h-5 text-xiaobei-light" />}
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${msg.role === 'user' ? 'bg-xiaobei-accent dark:bg-xiaobei-darktext' : 'bg-xiaobei-dark dark:bg-xiaobei-darkaccent'}`}>
+                {msg.role === 'user' ? <User className="w-5 h-5 text-xiaobei-dark dark:text-xiaobei-dark" /> : <Bot className="w-5 h-5 text-xiaobei-light dark:text-xiaobei-dark" />}
               </div>
 
               {/* Message Bubble */}
               <div
-                className={`p-3 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
-                  msg.role === 'user'
-                    ? 'bg-xiaobei-dark text-xiaobei-light rounded-tr-none'
-                    : 'bg-white text-gray-800 border border-gray-200 rounded-tl-none'
-                }`}
+                className={`p-3 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${msg.role === 'user' ? 'bg-xiaobei-dark text-xiaobei-light rounded-tr-none' : 'bg-white dark:bg-xiaobei-darkbg text-gray-800 dark:text-xiaobei-darktext border border-gray-200 dark:border-xiaobei-darkaccent/30 rounded-tl-none'}`}
               >
                 {msg.content}
               </div>
@@ -101,11 +95,11 @@ export const Chat: React.FC = () => {
         {isTyping && (
           <div className="flex justify-start">
             <div className="flex max-w-[80%] gap-2">
-               <div className="w-8 h-8 rounded-full bg-xiaobei-dark flex items-center justify-center flex-shrink-0 mt-1">
-                 <Bot className="w-5 h-5 text-xiaobei-light" />
+               <div className="w-8 h-8 rounded-full bg-xiaobei-dark dark:bg-xiaobei-darkaccent flex items-center justify-center flex-shrink-0 mt-1">
+                 <Bot className="w-5 h-5 text-xiaobei-light dark:text-xiaobei-dark" />
                </div>
-               <div className="bg-white p-3 rounded-2xl rounded-tl-none border border-gray-200 shadow-sm flex items-center">
-                 <Loader2 className="w-4 h-4 animate-spin text-xiaobei-dark" />
+               <div className="bg-white dark:bg-xiaobei-darkbg p-3 rounded-2xl rounded-tl-none border border-gray-200 dark:border-xiaobei-darkaccent/30 shadow-sm flex items-center">
+                 <Loader2 className="w-4 h-4 animate-spin text-xiaobei-dark dark:text-xiaobei-darkaccent" />
                </div>
             </div>
           </div>
@@ -114,19 +108,19 @@ export const Chat: React.FC = () => {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-white border-t border-gray-100">
+      <div className="p-4 bg-white dark:bg-xiaobei-darkbg border-t border-gray-100 dark:border-xiaobei-darkaccent/30">
         <form onSubmit={handleSend} className="flex gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Say something to Xiaobei..."
-            className="flex-grow p-3 rounded-xl bg-gray-100 border-2 border-transparent focus:border-xiaobei-dark focus:bg-white outline-none transition-all placeholder-gray-400 text-gray-700"
+            className="flex-grow p-3 rounded-xl bg-gray-100 dark:bg-xiaobei-dark border-2 border-transparent focus:border-xiaobei-dark dark:focus:border-xiaobei-darkaccent focus:bg-white dark:focus:bg-xiaobei-darkbg outline-none transition-all placeholder-gray-400 dark:placeholder-xiaobei-darktext/50 text-gray-700 dark:text-xiaobei-darktext"
           />
           <button
             type="submit"
             disabled={!input.trim()}
-            className="p-3 bg-xiaobei-dark text-xiaobei-light rounded-xl hover:bg-xiaobei-dark/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="p-3 bg-xiaobei-dark dark:bg-xiaobei-darkaccent text-xiaobei-light dark:text-xiaobei-dark rounded-xl hover:bg-xiaobei-dark/90 dark:hover:bg-xiaobei-darkaccent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <Send className="w-5 h-5" />
           </button>

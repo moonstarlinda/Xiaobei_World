@@ -53,18 +53,18 @@ export const Gallery: React.FC = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold text-xiaobei-dark flex items-center justify-center gap-3">
+        <h2 className="text-3xl font-bold text-xiaobei-dark dark:text-xiaobei-darktext flex items-center justify-center gap-3">
           <Camera className="w-8 h-8" />
           Photo Gallery
         </h2>
-        <p className="text-xiaobei-dark/70">Snapshots from my fluffy life. Click on any photo to view full size.</p>
+        <p className="text-xiaobei-dark/70 dark:text-xiaobei-darktext/70">Snapshots from my fluffy life. Click on any photo to view full size.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {photos.map((photo) => (
           <div
             key={photo.id}
-            className="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+            className="group relative bg-white dark:bg-xiaobei-darkbg/80 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
             onClick={() => openPhotoViewer(photo.id)}
           >
             <div className="aspect-[4/3] overflow-hidden">
@@ -81,8 +81,8 @@ export const Gallery: React.FC = () => {
               </p>
             </div>
             {/* Mobile-friendly caption always visible below image on touch devices */}
-            <div className="p-3 bg-white md:hidden">
-                <p className="text-sm font-medium text-xiaobei-dark">{photo.desc}</p>
+            <div className="p-3 bg-white dark:bg-xiaobei-darkbg/80 md:hidden">
+                <p className="text-sm font-medium text-xiaobei-dark dark:text-xiaobei-darktext">{photo.desc}</p>
             </div>
           </div>
         ))}

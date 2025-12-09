@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
@@ -14,7 +15,10 @@
                 light: '#F4E0C6', // Warm Yellow
                 dark: '#4A3B32',  // Dark Brown
                 accent: '#E0C6A4', // Slightly darker yellow for hover/active
-                text: '#2C221C'
+                text: '#2C221C',
+                darkbg: '#1a1512', // Dark background
+                darktext: '#F4E0C6', // Light text for dark mode
+                darkaccent: '#8B7355' // Accent color for dark mode
               }
             },
             fontFamily: {
