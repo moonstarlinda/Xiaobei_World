@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { photos } from '../src/data/photos';
-import { Camera, X, ArrowUp } from 'lucide-react';
+import { Camera, X, ArrowUp, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Gallery: React.FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
@@ -166,9 +166,31 @@ export const Gallery: React.FC = () => {
               />
             </div>
             <h3 className="text-white text-xl font-medium mt-4">{currentPhoto.desc}</h3>
-            <p className="text-white/60 text-sm mt-2">← swipe left or right →</p>
+            <p className="text-white/60 text-sm mt-2 block md:hidden">← swipe left or right →</p>
           </div>
           
+          {/* Desktop navigation buttons */}
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              navigatePhoto('prev');
+            }}
+            className="hidden md:flex absolute left-4 text-white p-3 rounded-full hover:bg-white/20 transition-all duration-200 transform hover:scale-110 active:scale-90"
+            aria-label="Previous photo"
+          >
+            <ChevronLeft className="w-8 h-8" />
+          </button>
+          
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              navigatePhoto('next');
+            }}
+            className="hidden md:flex absolute right-4 text-white p-3 rounded-full hover:bg-white/20 transition-all duration-200 transform hover:scale-110 active:scale-90"
+            aria-label="Next photo"
+          >
+            <ChevronRight className="w-8 h-8" />
+          </button>
 
         </div>
       )}
