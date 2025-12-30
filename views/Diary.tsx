@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MOCK_DIARY } from '../constants';
-import { Book } from 'lucide-react';
+import { Book, ArrowUp } from 'lucide-react';
 
 export const Diary: React.FC = () => {
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  // Show/hide back to top button based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   // Sort diary entries by date in descending order (newest first)
   const sortedDiary = [...MOCK_DIARY].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -36,6 +56,17 @@ export const Diary: React.FC = () => {
         <div className="text-center py-12 text-xiaobei-dark/70 dark:text-xiaobei-darktext/70">
           <p>No diary entries yet. Check back soon!</p>
         </div>
+      )}
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-3 bg-xiaobei-accent hover:bg-xiaobei-dark text-xiaobei-dark hover:text-xiaobei-light rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110 active:scale-90 z-40 dark:bg-xiaobei-darkaccent dark:hover:bg-xiaobei-accent dark:text-xiaobei-darktext dark:hover:text-xiaobei-dark"
+          aria-label="回到顶部"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </button>
       )}
     </div>
   );

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { photos } from '../src/data/photos';
-import { Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Camera, X, ChevronLeft, ChevronRight, ArrowUp } from 'lucide-react';
 
 export const Gallery: React.FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   const openPhotoViewer = (id: number) => {
     setSelectedPhoto(id);
@@ -47,6 +48,24 @@ export const Gallery: React.FC = () => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [selectedPhoto]);
+
+  // Show/hide back to top button based on scroll position
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const currentPhoto = selectedPhoto ? photos.find(p => p.id === selectedPhoto) : null;
 
@@ -137,6 +156,17 @@ export const Gallery: React.FC = () => {
             <ChevronRight className="w-8 h-8" />
           </button>
         </div>
+      )}
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-3 bg-xiaobei-accent hover:bg-xiaobei-dark text-xiaobei-dark hover:text-xiaobei-light rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110 active:scale-90 z-40 dark:bg-xiaobei-darkaccent dark:hover:bg-xiaobei-accent dark:text-xiaobei-darktext dark:hover:text-xiaobei-dark"
+          aria-label="回到顶部"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </button>
       )}
     </div>
   );

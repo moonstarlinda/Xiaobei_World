@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
           Made with <Heart className="w-4 h-4 fill-xiaobei-light text-xiaobei-light animate-pulse dark:fill-xiaobei-darktext dark:text-xiaobei-darktext" /> by Xiaobei's Best Friend
         </p>
         <p className="text-xs mt-2 opacity-75">
-          &copy; {new Date().getFullYear()} Project Xiaobei. All roars reserved.
+          &copy; {new Date().getFullYear()} Xiaobei's World. All roars reserved.
         </p>
       </div>
     </footer>
