@@ -20,14 +20,14 @@ export const Home: React.FC = () => {
           <p className="text-lg md:text-xl text-xiaobei-dark/80 max-w-lg dark:text-xiaobei-darktext/80">
             I'm a plush tiger with a big heart and a love for cozy adventures. Welcome to my little corner of the internet!
           </p>
-          <div className="pt-2 flex justify-center md:justify-start gap-4">
-             <Link to="/gallery" className="px-6 py-3 w-40 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all duration-200 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center active:scale-90 active:shadow-inner dark:border-xiaobei-darktext dark:text-xiaobei-darktext dark:hover:bg-xiaobei-darktext dark:hover:text-xiaobei-light">
+          <div className="pt-2 flex flex-col sm:flex-row justify-center md:justify-start gap-3 sm:gap-4 max-w-xs sm:max-w-none mx-auto sm:mx-0">
+             <Link to="/gallery" className="px-4 py-3 w-full sm:w-40 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all duration-200 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center active:scale-90 active:shadow-inner dark:border-xiaobei-darktext dark:text-xiaobei-darktext dark:hover:bg-xiaobei-darktext dark:hover:text-xiaobei-light">
                 See Photos
              </Link>
-             <Link to="/comics" className="px-6 py-3 w-40 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all duration-200 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center active:scale-90 active:shadow-inner dark:border-xiaobei-darktext dark:text-xiaobei-darktext dark:hover:bg-xiaobei-darktext dark:hover:text-xiaobei-light">
+             <Link to="/comics" className="px-4 py-3 w-full sm:w-40 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all duration-200 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center active:scale-90 active:shadow-inner dark:border-xiaobei-darktext dark:text-xiaobei-darktext dark:hover:bg-xiaobei-darktext dark:hover:text-xiaobei-light">
                 Read Comics
              </Link>
-             <Link to="/chat" className="px-6 py-3 w-40 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all duration-200 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center active:scale-90 active:shadow-inner dark:border-xiaobei-darktext dark:text-xiaobei-darktext dark:hover:bg-xiaobei-darktext dark:hover:text-xiaobei-light">
+             <Link to="/chat" className="px-4 py-3 w-full sm:w-40 border-2 border-xiaobei-dark text-xiaobei-dark rounded-full font-bold hover:bg-xiaobei-dark hover:text-xiaobei-light transition-all duration-200 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center active:scale-90 active:shadow-inner dark:border-xiaobei-darktext dark:text-xiaobei-darktext dark:hover:bg-xiaobei-darktext dark:hover:text-xiaobei-light">
                 Say Hello
              </Link>
           </div>
