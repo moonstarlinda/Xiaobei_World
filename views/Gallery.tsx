@@ -25,10 +25,14 @@ export const Gallery: React.FC = () => {
     
     const currentIndex = photos.findIndex(p => p.id === selectedPhoto);
     if (direction === 'next') {
-      const nextIndex = (currentIndex + 1) % photos.length;
+      // 如果已经是最后一张图片，不做任何操作
+      if (currentIndex >= photos.length - 1) return;
+      const nextIndex = currentIndex + 1;
       setSelectedPhoto(photos[nextIndex].id);
     } else {
-      const prevIndex = (currentIndex - 1 + photos.length) % photos.length;
+      // 如果已经是第一张图片，不做任何操作
+      if (currentIndex <= 0) return;
+      const prevIndex = currentIndex - 1;
       setSelectedPhoto(photos[prevIndex].id);
     }
   };
@@ -70,6 +74,11 @@ export const Gallery: React.FC = () => {
   };
 
   const currentPhoto = selectedPhoto ? photos.find(p => p.id === selectedPhoto) : null;
+
+  // Check if current photo is first or last
+  const currentIndex = selectedPhoto ? photos.findIndex(p => p.id === selectedPhoto) : -1;
+  const isFirstPhoto = currentIndex === 0;
+  const isLastPhoto = currentIndex === photos.length - 1;
 
   // Handle touch events for swipe navigation
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -166,31 +175,38 @@ export const Gallery: React.FC = () => {
               />
             </div>
             <h3 className="text-white text-xl font-medium mt-4">{currentPhoto.desc}</h3>
-            <p className="text-white/60 text-sm mt-2 block md:hidden">← swipe left or right →</p>
+            <p className="text-white/70 text-sm mt-2">
+              {currentIndex + 1} / {photos.length}
+            </p>
+            <p className="text-white/60 text-sm mt-1 block md:hidden">← swipe left or right →</p>
           </div>
           
           {/* Desktop navigation buttons */}
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              navigatePhoto('prev');
-            }}
-            className="hidden md:flex absolute left-4 text-white p-3 rounded-full hover:bg-white/20 transition-all duration-200 transform hover:scale-110 active:scale-90"
-            aria-label="Previous photo"
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
+          {!isFirstPhoto && (
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                navigatePhoto('prev');
+              }}
+              className="hidden md:flex absolute left-4 text-white p-3 rounded-full hover:bg-white/20 transition-all duration-200 transform hover:scale-110 active:scale-90"
+              aria-label="Previous photo"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+          )}
           
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              navigatePhoto('next');
-            }}
-            className="hidden md:flex absolute right-4 text-white p-3 rounded-full hover:bg-white/20 transition-all duration-200 transform hover:scale-110 active:scale-90"
-            aria-label="Next photo"
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
+          {!isLastPhoto && (
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                navigatePhoto('next');
+              }}
+              className="hidden md:flex absolute right-4 text-white p-3 rounded-full hover:bg-white/20 transition-all duration-200 transform hover:scale-110 active:scale-90"
+              aria-label="Next photo"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+          )}
 
         </div>
       )}
