@@ -33,7 +33,7 @@ export const photos: Photo[] = [
   },
   {
     id: 7,
-    url: '/images/photo_Christmas.png',
+    url: '/images/photo_Christmas.jpg',
     desc: 'Christmas'
   }
 
