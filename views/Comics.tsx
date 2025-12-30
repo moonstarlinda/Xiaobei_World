@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { comics } from '../src/data/comics';
 import { Comic } from '../types';
-import { Smile, X, Book } from 'lucide-react';
+import { Smile, X, Book, ArrowUp } from 'lucide-react';
 
 export const Comics: React.FC = () => {
   const [selectedComic, setSelectedComic] = useState<Comic | null>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -17,6 +18,24 @@ export const Comics: React.FC = () => {
       document.body.style.overflow = 'unset';
     };
   }, [selectedComic]);
+
+  // Show/hide back to top button based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   return (
     <div className="min-h-screen bg-stone-100 dark:bg-xiaobei-dark/95 animate-fade-in pb-20 -mt-6 pt-10">
@@ -115,6 +134,17 @@ export const Comics: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-3 bg-xiaobei-accent hover:bg-xiaobei-dark text-xiaobei-dark hover:text-xiaobei-light rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110 active:scale-90 z-40 dark:bg-xiaobei-darkaccent dark:hover:bg-xiaobei-accent dark:text-xiaobei-darktext dark:hover:text-xiaobei-dark"
+          aria-label="回到顶部"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </button>
       )}
     </div>
   );

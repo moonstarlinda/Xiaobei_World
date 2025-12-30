@@ -89,10 +89,6 @@ export const NavBar: React.FC<NavBarProps> = ({ isDark, onToggleTheme }) => {
                 {link.name}
               </Link>
             ))}
-            {/* Theme Toggle in Mobile Menu */}
-            <div className="px-3 py-3 flex justify-center">
-              <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
-            </div>
           </div>
         </div>
       )}
