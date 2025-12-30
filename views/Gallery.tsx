@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { photos } from '../src/data/photos';
-import { Camera, X, ChevronLeft, ChevronRight, ArrowUp } from 'lucide-react';
+import { Camera, X, ArrowUp } from 'lucide-react';
 
 export const Gallery: React.FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const openPhotoViewer = (id: number) => {
     setSelectedPhoto(id);
@@ -69,6 +71,30 @@ export const Gallery: React.FC = () => {
 
   const currentPhoto = selectedPhoto ? photos.find(p => p.id === selectedPhoto) : null;
 
+  // Handle touch events for swipe navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      navigatePhoto('next');
+    } else if (isRightSwipe) {
+      navigatePhoto('prev');
+    }
+  };
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center space-y-2">
@@ -123,18 +149,15 @@ export const Gallery: React.FC = () => {
             </button>
           </div>
           
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              navigatePhoto('prev');
-            }}
-            className="absolute left-4 text-white p-2 rounded-full hover:bg-white/20 transition-colors"
-            aria-label="Previous photo"
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
+
           
-          <div className="max-w-6xl max-h-[90vh] flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+          <div 
+            className="max-w-6xl max-h-[90vh] flex flex-col items-center" 
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className="relative max-h-[80vh]">
               <img 
                 src={currentPhoto.url} 
@@ -143,18 +166,10 @@ export const Gallery: React.FC = () => {
               />
             </div>
             <h3 className="text-white text-xl font-medium mt-4">{currentPhoto.desc}</h3>
+            <p className="text-white/60 text-sm mt-2">← swipe left or right →</p>
           </div>
           
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              navigatePhoto('next');
-            }}
-            className="absolute right-4 text-white p-2 rounded-full hover:bg-white/20 transition-colors"
-            aria-label="Next photo"
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
+
         </div>
       )}
 

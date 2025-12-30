@@ -27,7 +27,7 @@ export const comics: Comic[] = [
   },
   {
     id: 5,
-    title: "Who Moved My C Drive? (Chinese)",
+    title: "谁动了我的C盘?",
     date: "2025-11-30",
     imageUrl: "/images/comic_who_moved_my_C_drive_CN.png"
   },
