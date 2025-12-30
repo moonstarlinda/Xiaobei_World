@@ -30,7 +30,13 @@ export const photos: Photo[] = [
     id: 6,
     url: '/images/photo_wearing_sisters_hat.png',
     desc: 'Wearing Sister\'s Hat'
+  },
+  {
+    id: 7,
+    url: '/images/photo_Christmas.png',
+    desc: 'Christmas'
   }
+
   
   
 ];
