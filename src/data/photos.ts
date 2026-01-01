@@ -35,6 +35,11 @@ export const photos: Photo[] = [
     id: 7,
     url: '/images/photo_Christmas.jpg',
     desc: 'Christmas'
+  },
+  {
+    id: 8,
+    url: '/images/photo_Xiaobei_2026_new_year.jpg',
+    desc: 'New Year 2026'
   }
 
   
