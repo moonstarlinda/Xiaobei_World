@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Bot, Loader2 } from 'lucide-react';
 import { Message } from '../types';
 
+const MAX_MESSAGES_PER_USER = 5;
+const STORAGE_KEY = 'xiaobei_chat_count';
+
 export const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -13,6 +16,10 @@ export const Chat: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [messageCount, setMessageCount] = useState<number>(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? parseInt(stored, 10) : 0;
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -23,9 +30,21 @@ export const Chat: React.FC = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
+
+    // 检查聊天次数限制
+    if (messageCount >= MAX_MESSAGES_PER_USER) {
+      const limitMsg: Message = {
+        id: Date.now().toString(),
+        role: 'system',
+        content: 'Sorry, you have reached the daily chat limit (5 messages). Come back tomorrow!',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, limitMsg]);
+      return;
+    }
 
     const newUserMsg: Message = {
       id: Date.now().toString(),
@@ -38,17 +57,48 @@ export const Chat: React.FC = () => {
     setInput('');
     setIsTyping(true);
 
-    // Mock auto-reply
-    setTimeout(() => {
+    try {
+      // 调用 API 接口
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: input }),
+      });
+
+      if (!response.ok) {
+        throw new Error('API request failed');
+      }
+
+      const data = await response.json();
+      
       const newSystemMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'system',
-        content: 'Awooo! (Auto-reply)',
+        content: data.message || 'Sorry, I could not understand that.',
         timestamp: new Date()
       };
+
       setMessages(prev => [...prev, newSystemMsg]);
+
+      // 更新聊天次数
+      const newCount = messageCount + 1;
+      setMessageCount(newCount);
+      localStorage.setItem(STORAGE_KEY, newCount.toString());
+
+    } catch (error) {
+      console.error('Error sending message:', error);
+      const errorMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'system',
+        content: 'Sorry, something went wrong. Please try again later.',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -109,17 +159,21 @@ export const Chat: React.FC = () => {
 
       {/* Input Area */}
       <div className="p-4 bg-white dark:bg-xiaobei-darkbg border-t border-gray-100 dark:border-xiaobei-darkaccent/30">
+        <div className="mb-2 text-xs text-gray-500 dark:text-xiaobei-darktext/70">
+          Messages remaining: {MAX_MESSAGES_PER_USER - messageCount}
+        </div>
         <form onSubmit={handleSend} className="flex gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Say something to Xiaobei..."
-            className="flex-grow p-3 rounded-xl bg-gray-100 dark:bg-xiaobei-dark border-2 border-transparent focus:border-xiaobei-dark dark:focus:border-xiaobei-darkaccent focus:bg-white dark:focus:bg-xiaobei-darkbg outline-none transition-all placeholder-gray-400 dark:placeholder-xiaobei-darktext/50 text-gray-700 dark:text-xiaobei-darktext"
+            disabled={messageCount >= MAX_MESSAGES_PER_USER}
+            className="flex-grow p-3 rounded-xl bg-gray-100 dark:bg-xiaobei-dark border-2 border-transparent focus:border-xiaobei-dark dark:focus:border-xiaobei-darkaccent focus:bg-white dark:focus:bg-xiaobei-darkbg outline-none transition-all placeholder-gray-400 dark:placeholder-xiaobei-darktext/50 text-gray-700 dark:text-xiaobei-darktext disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <button
             type="submit"
-            disabled={!input.trim()}
+            disabled={!input.trim() || messageCount >= MAX_MESSAGES_PER_USER}
             className="p-3 bg-xiaobei-dark dark:bg-xiaobei-darkaccent text-xiaobei-light dark:text-xiaobei-dark rounded-xl hover:bg-xiaobei-dark/90 dark:hover:bg-xiaobei-darkaccent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <Send className="w-5 h-5" />
