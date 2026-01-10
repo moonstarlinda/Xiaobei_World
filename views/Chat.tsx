@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Bot, Loader2 } from 'lucide-react';
-import { Message } from '../types';
+import type { Message, ChatMessage } from '../types';
 
-const MAX_MESSAGES_PER_USER = 5;
-const STORAGE_KEY = 'xiaobei_chat_count';
 
 export const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -16,10 +14,6 @@ export const Chat: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [messageCount, setMessageCount] = useState<number>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? parseInt(stored, 10) : 0;
-  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -34,18 +28,6 @@ export const Chat: React.FC = () => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // 检查聊天次数限制
-    if (messageCount >= MAX_MESSAGES_PER_USER) {
-      const limitMsg: Message = {
-        id: Date.now().toString(),
-        role: 'system',
-        content: 'Sorry, you have reached the daily chat limit (5 messages). Come back tomorrow!',
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, limitMsg]);
-      return;
-    }
-
     const newUserMsg: Message = {
       id: Date.now().toString(),
       role: 'user',
@@ -58,41 +40,66 @@ export const Chat: React.FC = () => {
     setIsTyping(true);
 
     try {
-      // 调用 API 接口
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: input }),
-      });
+  const chatMessages: ChatMessage[] = messages
+    .filter((m: Message) => m.role === 'user' || m.role === 'assistant')
+    .map((m: Message): ChatMessage => ({
+      role: m.role,      // 这里 m.role 是 'user' | 'assistant'
+      content: m.content // string
+    }));
+
+  const currentMsg: ChatMessage = { role: 'user', content: input };
+
+  const allMessages: ChatMessage[] = [...chatMessages, currentMsg].slice(-20);
+
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  if (process.env.NODE_ENV === 'development') {
+    headers['x-dev-user'] = 'lin';
+  }
+
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ messages: allMessages }),
+  });
 
       if (!response.ok) {
+        if (response.status === 429) {
+          // 处理限流响应
+          const limitData = await response.json();
+          const limitMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            role: 'system',
+            content: limitData.message || 'Sorry, you have reached the daily chat limit. Come back tomorrow!',
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, limitMsg]);
+          return;
+        }
         throw new Error('API request failed');
       }
 
       const data = await response.json();
       
-      const newSystemMsg: Message = {
+      const newAssistantMsg: Message = {
         id: (Date.now() + 1).toString(),
-        role: 'system',
+        role: 'assistant',
         content: data.message || 'Sorry, I could not understand that.',
         timestamp: new Date()
       };
 
-      setMessages(prev => [...prev, newSystemMsg]);
-
-      // 更新聊天次数
-      const newCount = messageCount + 1;
-      setMessageCount(newCount);
-      localStorage.setItem(STORAGE_KEY, newCount.toString());
+      setMessages(prev => [...prev, newAssistantMsg]);
 
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'system',
-        content: 'Sorry, something went wrong. Please try again later.',
+        content: error instanceof TypeError && error.message.includes('network') 
+          ? '网络连接不稳定，小北暂时收不到消息。请检查网络后重试，嗷呜～' 
+          : '抱歉，小北的大脑暂时短路了，请稍后再试。',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMsg]);
@@ -159,21 +166,17 @@ export const Chat: React.FC = () => {
 
       {/* Input Area */}
       <div className="p-4 bg-white dark:bg-xiaobei-darkbg border-t border-gray-100 dark:border-xiaobei-darkaccent/30">
-        <div className="mb-2 text-xs text-gray-500 dark:text-xiaobei-darktext/70">
-          Messages remaining: {MAX_MESSAGES_PER_USER - messageCount}
-        </div>
         <form onSubmit={handleSend} className="flex gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Say something to Xiaobei..."
-            disabled={messageCount >= MAX_MESSAGES_PER_USER}
             className="flex-grow p-3 rounded-xl bg-gray-100 dark:bg-xiaobei-dark border-2 border-transparent focus:border-xiaobei-dark dark:focus:border-xiaobei-darkaccent focus:bg-white dark:focus:bg-xiaobei-darkbg outline-none transition-all placeholder-gray-400 dark:placeholder-xiaobei-darktext/50 text-gray-700 dark:text-xiaobei-darktext disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <button
             type="submit"
-            disabled={!input.trim() || messageCount >= MAX_MESSAGES_PER_USER}
+            disabled={!input.trim()}
             className="p-3 bg-xiaobei-dark dark:bg-xiaobei-darkaccent text-xiaobei-light dark:text-xiaobei-dark rounded-xl hover:bg-xiaobei-dark/90 dark:hover:bg-xiaobei-darkaccent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <Send className="w-5 h-5" />

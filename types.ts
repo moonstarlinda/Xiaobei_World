@@ -10,12 +10,19 @@ export interface DiaryEntry {
   content: string;
 }
 
+export type Role = 'system' | 'user' | 'assistant';
+
 export interface Message {
   id: string;
-  role: 'user' | 'system';
+  role: Role;
   content: string;
   timestamp: Date;
 }
+
+export type ChatMessage = {
+  role: Role;
+  content: string;
+};
 
 export interface Comic {
   id: number;
