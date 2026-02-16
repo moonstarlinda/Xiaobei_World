@@ -7,6 +7,9 @@ import { Gallery } from './views/Gallery';
 import { Chat } from './views/Chat';
 import { Comics } from './views/Comics';
 import { Diary } from './views/Diary';
+import { isNewYearPeriod, toggleNewYearTheme } from './src/theme/newyear';
+// 导入新年主题样式
+import './src/styles/newyear.css';
 
 const App: React.FC = () => {
   // Theme toggle state
@@ -33,6 +36,11 @@ const App: React.FC = () => {
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    // Check if it's New Year period and apply theme
+    const isNewYear = isNewYearPeriod();
+    toggleNewYearTheme(isNewYear);
+    console.log('New Year theme:', isNewYear ? 'enabled' : 'disabled');
   }, []);
 
   // Update theme when isDark changes

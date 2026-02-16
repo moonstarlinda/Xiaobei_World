@@ -1,0 +1,99 @@
+/* 新年主题样式 */
+/* 仅在 body.theme-newyear 时生效 */
+
+/* 1. 全站背景：淡暖红/暖橘渐变 */
+body.theme-newyear {
+  background: linear-gradient(135deg, 
+    rgba(247, 220, 200, 0.95) 0%, 
+    rgba(245, 210, 190, 0.9) 50%, 
+    rgba(247, 220, 200, 0.95) 100%);
+}
+
+/* 深色模式下的新年背景 */
+body.theme-newyear.dark {
+  background: linear-gradient(135deg, 
+    rgba(100, 80, 60, 0.95) 0%, 
+    rgba(120, 90, 70, 0.9) 50%, 
+    rgba(100, 80, 60, 0.95) 100%);
+}
+
+/* 2. Home 首页 Hero 区域右上角 pill 标记 */
+body.theme-newyear .home-hero {
+  position: relative;
+}
+
+body.theme-newyear .home-hero::before {
+  content: "🧧 春节限定";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #c4473d; /* 胭脂红，更中国风 */
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(196, 71, 61, 0.3);
+  z-index: 10;
+}
+
+/* 3. Diary 区块：Recent Diary 卡片样式调整 */
+body.theme-newyear .diary-card {
+  background: linear-gradient(135deg, #f9f0e0, #f5e0d0);
+  border: 1px solid rgba(196, 71, 61, 0.2);
+  box-shadow: 0 4px 12px rgba(196, 71, 61, 0.1);
+}
+
+body.theme-newyear .diary-card:hover {
+  box-shadow: 0 6px 16px rgba(196, 71, 61, 0.2);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* 深色模式下的日记卡片 */
+body.theme-newyear.dark .diary-card {
+  background: linear-gradient(135deg, #5d4037, #4e342e);
+  border: 1px solid rgba(241, 196, 15, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.theme-newyear.dark .diary-card:hover {
+  box-shadow: 0 6px 16px rgba(241, 196, 15, 0.15);
+}
+
+/* 确保文本可读性 */
+body.theme-newyear .diary-card h3,
+body.theme-newyear .diary-card p {
+  color: #5d4037;
+}
+
+body.theme-newyear.dark .diary-card h3,
+body.theme-newyear.dark .diary-card p {
+  color: #f5e6d3;
+}
+
+/* 4. Chat 页面背景 */
+body.theme-newyear .chat-container {
+  background: linear-gradient(135deg, #f9f5e6, #f7f0e6);
+}
+
+body.theme-newyear .chat-messages {
+  background: linear-gradient(135deg, #f9f5e6, #f7f0e6);
+}
+
+body.theme-newyear .chat-input {
+  background: linear-gradient(135deg, #f9f5e6, #f7f0e6);
+}
+
+/* 深色模式下的 Chat 页面 */
+body.theme-newyear.dark .chat-container {
+  background: linear-gradient(135deg, #5d4037, #4e342e);
+}
+
+body.theme-newyear.dark .chat-messages {
+  background: linear-gradient(135deg, #6d4c41, #5d4037);
+}
+
+body.theme-newyear.dark .chat-input {
+  background: linear-gradient(135deg, #5d4037, #4e342e);
+}

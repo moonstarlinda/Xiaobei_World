@@ -40,7 +40,7 @@ export const Diary: React.FC = () => {
 
       <div className="grid gap-6">
         {sortedDiary.map((entry, index) => (
-          <div key={index} className="bg-white dark:bg-xiaobei-darkbg/80 p-6 rounded-2xl border-l-4 border-xiaobei-dark dark:border-xiaobei-darkaccent shadow-sm hover:shadow-md transition-shadow">
+          <div key={index} className="diary-card bg-white dark:bg-xiaobei-darkbg/80 p-6 rounded-2xl border-l-4 border-xiaobei-dark dark:border-xiaobei-darkaccent shadow-sm hover:shadow-md transition-shadow">
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
               <h3 className="text-xl font-bold text-xiaobei-dark dark:text-xiaobei-darktext">{entry.title}</h3>
               <span className="text-sm font-mono text-xiaobei-dark/60 dark:text-xiaobei-darktext/60 bg-xiaobei-light dark:bg-xiaobei-dark/20 px-2 py-1 rounded-md">{entry.date}</span>

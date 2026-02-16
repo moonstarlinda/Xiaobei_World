@@ -109,7 +109,7 @@ export const Chat: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto h-[600px] flex flex-col bg-white dark:bg-xiaobei-darkbg rounded-3xl shadow-xl overflow-hidden border-4 border-xiaobei-dark dark:border-xiaobei-darkaccent animate-fade-in">
+    <div className="chat-container max-w-2xl mx-auto h-[600px] flex flex-col bg-white dark:bg-xiaobei-darkbg rounded-3xl shadow-xl overflow-hidden border-4 border-xiaobei-dark dark:border-xiaobei-darkaccent animate-fade-in">
       
       {/* Header */}
       <div className="bg-xiaobei-dark dark:bg-xiaobei-darkaccent p-4 flex items-center gap-3 shadow-md z-10">
@@ -126,7 +126,7 @@ export const Chat: React.FC = () => {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-grow p-4 overflow-y-auto bg-gray-50 dark:bg-xiaobei-dark space-y-4">
+      <div className="chat-messages flex-grow p-4 overflow-y-auto bg-gray-50 dark:bg-xiaobei-dark space-y-4">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -165,7 +165,7 @@ export const Chat: React.FC = () => {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-white dark:bg-xiaobei-darkbg border-t border-gray-100 dark:border-xiaobei-darkaccent/30">
+      <div className="chat-input p-4 bg-white dark:bg-xiaobei-darkbg border-t border-gray-100 dark:border-xiaobei-darkaccent/30">
         <form onSubmit={handleSend} className="flex gap-2">
           <input
             type="text"

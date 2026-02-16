@@ -27,7 +27,7 @@ export const Home: React.FC = () => {
   return (
     <div className="space-y-12 animate-fade-in">
       {/* Hero Section */}
-      <section className="flex flex-col md:flex-row items-center gap-8 md:gap-12 py-8">
+      <section className="home-hero flex flex-col md:flex-row items-center gap-8 md:gap-12 py-8">
         <img 
           src="/images/avatar.png" 
           alt="Xiaobei Avatar" 
@@ -37,6 +37,10 @@ export const Home: React.FC = () => {
           <h1 className="text-4xl md:text-6xl font-bold text-xiaobei-dark tracking-tight dark:text-xiaobei-darktext">
             Hi, I'm <span className="underline decoration-wavy decoration-xiaobei-accent dark:decoration-xiaobei-darkaccent">Xiaobei</span>
           </h1>
+          {/* 新年特别拜年文字 */}
+          <p className="text-sm text-xiaobei-dark/80 opacity-80 dark:text-xiaobei-darktext/80">
+            🐯 🧧 小北给你拜年啦～ Happy Chinese New Year! 🧨 ✨
+          </p>
           <p className="text-lg md:text-xl text-xiaobei-dark/80 max-w-lg dark:text-xiaobei-darktext/80">
             I'm a plush tiger with a big heart and a love for cozy adventures. Welcome to my little corner of the internet!
           </p>
@@ -76,7 +80,7 @@ export const Home: React.FC = () => {
             .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
             .slice(0, 3)
             .map((entry, index) => (
-              <div key={index} className="bg-white p-6 rounded-2xl border-l-4 border-xiaobei-dark shadow-sm hover:shadow-md transition-shadow dark:bg-xiaobei-darkbg dark:border-xiaobei-darktext">
+              <div key={index} className="diary-card bg-white p-6 rounded-2xl border-l-4 border-xiaobei-dark shadow-sm hover:shadow-md transition-shadow dark:bg-xiaobei-darkbg dark:border-xiaobei-darktext">
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
                   <h3 className="text-xl font-bold text-xiaobei-dark dark:text-xiaobei-darktext">{entry.title}</h3>
                   <span className="text-sm font-mono text-xiaobei-dark/60 bg-xiaobei-light px-2 py-1 rounded-md dark:text-xiaobei-darktext/60 dark:bg-xiaobei-darkbg">{entry.date}</span>
