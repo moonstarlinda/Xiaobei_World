@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+.env*
 .env.local
 .env.*.local
 
@@ -27,4 +28,3 @@ dist-ssr
 *.sw?
 .vercel
 .env*.local
-test-rate-limiting.js

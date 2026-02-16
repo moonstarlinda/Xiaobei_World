@@ -40,6 +40,11 @@ export const photos: Photo[] = [
     id: 8,
     url: '/images/photo_Xiaobei_2026_new_year.jpg',
     desc: 'New Year 2026'
+  },
+  {
+    id: 9,
+    url: '/images/photo_Xiaobei_Chinese_Traditional_New_Year_2026.jpg',
+    desc: 'New Year 2026 in Chinese Traditional'
   }
 
   

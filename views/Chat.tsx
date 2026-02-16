@@ -40,30 +40,30 @@ export const Chat: React.FC = () => {
     setIsTyping(true);
 
     try {
-  const chatMessages: ChatMessage[] = messages
-    .filter((m: Message) => m.role === 'user' || m.role === 'assistant')
-    .map((m: Message): ChatMessage => ({
-      role: m.role,      // 这里 m.role 是 'user' | 'assistant'
-      content: m.content // string
-    }));
+      const chatMessages: ChatMessage[] = messages
+        .filter((m: Message) => m.role === 'user' || m.role === 'assistant')
+        .map((m: Message): ChatMessage => ({
+          role: m.role,      // 这里 m.role 是 'user' | 'assistant'
+          content: m.content // string
+        }));
 
-  const currentMsg: ChatMessage = { role: 'user', content: input };
+      const currentMsg: ChatMessage = { role: 'user', content: input };
 
-  const allMessages: ChatMessage[] = [...chatMessages, currentMsg].slice(-20);
+      const allMessages: ChatMessage[] = [...chatMessages, currentMsg].slice(-20);
 
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
 
-  if (process.env.NODE_ENV === 'development') {
-    headers['x-dev-user'] = 'lin';
-  }
+      if (process.env.NODE_ENV === 'development') {
+        headers['x-dev-user'] = 'lin';
+      }
 
-  const response = await fetch('/api/chat', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ messages: allMessages }),
-  });
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ messages: allMessages }),
+      });
 
       if (!response.ok) {
         if (response.status === 429) {
