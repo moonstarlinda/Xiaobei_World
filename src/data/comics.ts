@@ -54,6 +54,12 @@ export const comics: Comic[] = [
     title: "Quanzhou Adventures",
     date: "2025-12-30",
     imageUrl: "/images/comic_QuanZhou_Adventures.jpg"
+  },
+  {
+    id: 10,
+    title: "The Cost of The Claw",
+    date: "2026-03-11",
+    imageUrl: "/images/comic_The_Cost_of_The_Claw.jpg"
   }
 
 

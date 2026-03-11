@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MOCK_DIARY } from '../constants';
 import { BookOpen, ArrowRight, Book, ArrowUp } from 'lucide-react';
+import { isNewYearPeriod } from '../src/theme/newyear';
 
 export const Home: React.FC = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -38,9 +39,11 @@ export const Home: React.FC = () => {
             Hi, I'm <span className="underline decoration-wavy decoration-xiaobei-accent dark:decoration-xiaobei-darkaccent">Xiaobei</span>
           </h1>
           {/* 新年特别拜年文字 */}
-          <p className="text-sm text-xiaobei-dark/80 opacity-80 dark:text-xiaobei-darktext/80">
-            🐯 🧧 小北给你拜年啦～ Happy Chinese New Year! 🧨 ✨
-          </p>
+          {isNewYearPeriod() && (
+            <p className="text-sm text-xiaobei-dark/80 opacity-80 dark:text-xiaobei-darktext/80">
+              🐯 🧧 小北给你拜年啦～ Happy Chinese New Year! 🧨 ✨
+            </p>
+          )}
           <p className="text-lg md:text-xl text-xiaobei-dark/80 max-w-lg dark:text-xiaobei-darktext/80">
             I'm a plush tiger with a big heart and a love for cozy adventures. Welcome to my little corner of the internet!
           </p>
