@@ -1,0 +1,122 @@
+/* 星空背景样式 */
+.starry-sky {
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  position: fixed;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 0;
+}
+
+/* 星星效果 */
+.starry-sky::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #ffd700, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #ffc107, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, #ffb300, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #ffa000, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 220px 180px, #ff8f00, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 270px 230px, #ff7f00, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 320px 280px, #ff6f00, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 370px 330px, #ff5f00, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 420px 380px, #ff4f00, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 470px 430px, #ff3f00, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 520px 480px, #ff2f00, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 570px 530px, #ff1f00, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 620px 580px, #ff0f00, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 670px 630px, #ff0000, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 720px 680px, #ff1f00, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 800px 800px;
+  animation: twinkle 20s linear infinite;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+/* 小北星座图案 */
+.starry-sky::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 300px;
+  height: 200px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700'%3E%3C!-- 头部 --%3E%3Ccircle cx='80' cy='60' r='2'/%3E%3Ccircle cx='65' cy='70' r='2'/%3E%3Ccircle cx='70' cy='100' r='2'/%3E%3Ccircle cx='85' cy='105' r='2'/%3E%3Ccircle cx='100' cy='100' r='2'/%3E%3Ccircle cx='110' cy='85' r='2'/%3E%3Ccircle cx='105' cy='70' r='2'/%3E%3C!-- 鼻子 --%3E%3Ccircle cx='85' cy='75' r='2'/%3E%3C!-- 脖子 --%3E%3Ccircle cx='110' cy='95' r='2'/%3E%3C!-- 身体 --%3E%3Ccircle cx='130' cy='90' r='2'/%3E%3Ccircle cx='150' cy='85' r='2'/%3E%3Ccircle cx='170' cy='85' r='2'/%3E%3Ccircle cx='190' cy='90' r='2'/%3E%3C!-- 尾巴 --%3E%3Ccircle cx='200' cy='85' r='2'/%3E%3Ccircle cx='210' cy='75' r='2'/%3E%3Ccircle cx='215' cy='65' r='2'/%3E%3C!-- 前肢 --%3E%3Ccircle cx='95' cy='110' r='2'/%3E%3Ccircle cx='85' cy='140' r='2'/%3E%3Ccircle cx='125' cy='110' r='2'/%3E%3Ccircle cx='115' cy='140' r='2'/%3E%3C!-- 后肢 --%3E%3Ccircle cx='155' cy='115' r='2'/%3E%3Ccircle cx='165' cy='145' r='2'/%3E%3Ccircle cx='185' cy='115' r='2'/%3E%3Ccircle cx='195' cy='145' r='2'/%3E%3C/g%3E%3Cg stroke='rgba(255,215,0,0.3)' stroke-width='0.8' fill='none'%3E%3C!-- 头部连线 --%3E%3Cline x1='80' y1='60' x2='65' y2='70'/%3E%3Cline x1='65' y1='70' x2='70' y2='100'/%3E%3Cline x1='70' y1='100' x2='85' y2='105'/%3E%3Cline x1='85' y1='105' x2='100' y2='100'/%3E%3Cline x1='100' y1='100' x2='110' y2='85'/%3E%3Cline x1='110' y1='85' x2='105' y2='70'/%3E%3Cline x1='105' y1='70' x2='85' y2='75'/%3E%3Cline x1='85' y1='75' x2='80' y2='60'/%3E%3Cline x1='85' y1='75' x2='70' y2='100'/%3E%3C!-- 脖子连线 --%3E%3Cline x1='110' y1='85' x2='110' y2='95'/%3E%3C!-- 身体连线 --%3E%3Cline x1='110' y1='95' x2='130' y2='90'/%3E%3Cline x1='130' y1='90' x2='150' y2='85'/%3E%3Cline x1='150' y1='85' x2='170' y2='85'/%3E%3Cline x1='170' y1='85' x2='190' y2='90'/%3E%3C!-- 尾巴连线 --%3E%3Cline x1='190' y1='90' x2='200' y2='85'/%3E%3Cline x1='200' y1='85' x2='210' y2='75'/%3E%3Cline x1='210' y1='75' x2='215' y2='65'/%3E%3C!-- 前肢连线 --%3E%3Cline x1='70' y1='100' x2='95' y2='110'/%3E%3Cline x1='95' y1='110' x2='85' y2='140'/%3E%3Cline x1='100' y1='100' x2='125' y2='110'/%3E%3Cline x1='125' y1='110' x2='115' y2='140'/%3E%3C!-- 后肢连线 --%3E%3Cline x1='150' y1='85' x2='155' y2='115'/%3E%3Cline x1='155' y1='115' x2='165' y2='145'/%3E%3Cline x1='170' y1='85' x2='185' y2='115'/%3E%3Cline x1='185' y1='115' x2='195' y2='145'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  animation: constellationPulse 4s ease-in-out infinite;
+  opacity: 0.5;
+  filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.3));
+  z-index: 2;
+}
+
+/* 星星闪烁动画 */
+@keyframes twinkle {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    transform: translateX(-800px) translateY(-800px);
+  }
+}
+
+/* 流星效果 */
+.starry-sky .shooting-star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom right,
+    transparent 49%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 51%
+  );
+  background-size: 100% 100%;
+  animation: shootingStar 3s linear infinite;
+  opacity: 0;
+  z-index: 3;
+}
+
+/* 流星动画 */
+@keyframes shootingStar {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%) translateY(-100%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%) translateY(100%);
+  }
+}
+
+/* 星座脉冲动画 */
+@keyframes constellationPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+}

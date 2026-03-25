@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { comics } from '../src/data/comics';
 import { Comic } from '../types';
 import { Smile, X, Book, ArrowUp } from 'lucide-react';
+import '../src/styles/starry-sky.css';
 
 export const Comics: React.FC = () => {
   const [selectedComic, setSelectedComic] = useState<Comic | null>(null);
@@ -107,9 +108,11 @@ export const Comics: React.FC = () => {
       {/* Lightbox Modal */}
       {selectedComic && (
         <div 
-          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
+          className={`fixed inset-0 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in ${selectedComic.id === 11 ? 'starry-sky' : 'bg-black/95'}`}
+          style={{ zIndex: 100 }}
           onClick={() => setSelectedComic(null)}
         >
+          {selectedComic.id === 11 && <div className="shooting-star"></div>}
           {/* Close Button */}
           <button 
             onClick={() => setSelectedComic(null)}
