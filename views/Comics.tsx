@@ -8,6 +8,9 @@ export const Comics: React.FC = () => {
   const [selectedComic, setSelectedComic] = useState<Comic | null>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
+  // 按日期倒序排序漫画，最新的在前面
+  const sortedComics = [...comics].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   // Lock body scroll when modal is open
   useEffect(() => {
     if (selectedComic) {
@@ -55,7 +58,7 @@ export const Comics: React.FC = () => {
       {/* Bookshelf Grid */}
       <div className="max-w-6xl mx-auto px-4 sm:px-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-0 gap-y-20">
-          {comics.map((comic) => (
+          {sortedComics.map((comic) => (
             <div
               key={comic.id}
               onClick={() => setSelectedComic(comic)}
