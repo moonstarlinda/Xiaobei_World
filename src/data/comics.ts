@@ -72,6 +72,12 @@ export const comics: Comic[] = [
     title: "From Dots to Paths",
     date: "2026-04-05",
     imageUrl: "/images/comic_From_Dots_to_Paths.jpg"
+  },
+  {
+    id: 13,
+    title: "生活大作战",
+    date: "2026-04-18",
+    imageUrl: "/images/comic_生活大作战.jpg"
   }
 
 
