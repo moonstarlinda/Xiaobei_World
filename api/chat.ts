@@ -6,6 +6,25 @@ type ChatMessage = {
   content: string;
 };
 
+type MemoryRateLimitEntry = {
+  count: number;
+  resetAt: number;
+};
+
+type RateLimitResult = {
+  limited: boolean;
+  count: number;
+  resetAt: number;
+  source: 'kv' | 'memory';
+};
+
+const DAILY_CHAT_LIMIT = 5;
+const ONE_DAY_SECONDS = 86400;
+
+// Fallback only: Vercel serverless memory is ephemeral and per-instance.
+// This does not replace KV; it only prevents unlimited model calls while KV is unavailable.
+const memoryRateLimits = new Map<string, MemoryRateLimitEntry>();
+
 function detectLanguage(messages: { role: string; content: string }[]) {
   const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
   if (!lastUserMsg) return 'zh';
@@ -25,6 +44,112 @@ function getIdentity(req: VercelRequest, envTag: string) {
 
 function hasWritableKvConfig() {
   return Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+}
+
+function getUtcDateKey(now = new Date()) {
+  return now.toISOString().slice(0, 10);
+}
+
+function getNextUtcMidnightMs(now = new Date()) {
+  return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
+}
+
+function getLimitMessage(lang: string) {
+  return lang === 'en'
+    ? "Aww, we've chatted enough for today. Come back tomorrow, okay?"
+    : '哎呀，今天的聊天次数到上限啦，明天再来找小北玩吧。';
+}
+
+function getFallbackLimitMessage(lang: string) {
+  return lang === 'en'
+    ? 'Xiaobei is a little tired today. Please try again later.'
+    : '今天小北有点累，请稍后再试。';
+}
+
+function getRetryAfterSeconds(resetAt: number) {
+  return Math.max(1, Math.ceil((resetAt - Date.now()) / 1000));
+}
+
+async function checkKvRateLimit(identity: string, envTag: string): Promise<RateLimitResult> {
+  const today = getUtcDateKey();
+  const limitKey = `xiaobei:chat:${envTag}:${today}:${identity}`;
+
+  const count = await kv.incr(limitKey);
+  if (count === 1) await kv.expire(limitKey, ONE_DAY_SECONDS);
+
+  return {
+    limited: count > DAILY_CHAT_LIMIT,
+    count,
+    resetAt: getNextUtcMidnightMs(),
+    source: 'kv',
+  };
+}
+
+function cleanupExpiredMemoryLimits(nowMs: number) {
+  for (const [key, entry] of memoryRateLimits.entries()) {
+    if (entry.resetAt <= nowMs) {
+      memoryRateLimits.delete(key);
+    }
+  }
+}
+
+function checkMemoryRateLimit(identity: string, envTag: string): RateLimitResult {
+  const now = new Date();
+  const nowMs = now.getTime();
+  const resetAt = getNextUtcMidnightMs(now);
+  const today = getUtcDateKey(now);
+  const memoryKey = `xiaobei:chat:fallback:${envTag}:${today}:${identity}`;
+
+  cleanupExpiredMemoryLimits(nowMs);
+
+  const existing = memoryRateLimits.get(memoryKey);
+  const entry =
+    existing && existing.resetAt > nowMs
+      ? { count: existing.count + 1, resetAt: existing.resetAt }
+      : { count: 1, resetAt };
+
+  memoryRateLimits.set(memoryKey, entry);
+
+  return {
+    limited: entry.count > DAILY_CHAT_LIMIT,
+    count: entry.count,
+    resetAt: entry.resetAt,
+    source: 'memory',
+  };
+}
+
+async function checkRateLimit(req: VercelRequest, envTag: string): Promise<RateLimitResult> {
+  const identity = getIdentity(req, envTag);
+
+  if (hasWritableKvConfig()) {
+    try {
+      return await checkKvRateLimit(identity, envTag);
+    } catch (error) {
+      console.warn('[rl][kv] failure, using memory fallback:', error);
+    }
+  } else {
+    console.warn('[rl][kv] missing config, using memory fallback');
+  }
+
+  try {
+    const result = checkMemoryRateLimit(identity, envTag);
+    console.warn('[rl][memory-fallback]', {
+      identity,
+      count: result.count,
+      limited: result.limited,
+      resetAt: new Date(result.resetAt).toISOString(),
+      env: envTag,
+    });
+    return result;
+  } catch (error) {
+    console.warn('[rl][memory-fallback] failure, conservatively limiting request:', error);
+    return {
+      limited: true,
+      count: DAILY_CHAT_LIMIT + 1,
+      resetAt: getNextUtcMidnightMs(),
+      source: 'memory',
+    };
+  }
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -49,40 +174,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const envTag = process.env.NODE_ENV === 'development' ? 'dev' : 'prod';
-    let rateLimitStart = Date.now();
-    let rateLimitEnd = rateLimitStart;
+    const lang = detectLanguage(
+      Array.isArray(messages) ? messages : [{ role: 'user', content: userMessage }]
+    );
+    const rateLimitStart = Date.now();
+    const rateLimit = await checkRateLimit(req, envTag);
+    const rateLimitEnd = Date.now();
 
-    if (hasWritableKvConfig()) {
-      try {
-        const identity = getIdentity(req, envTag);
-        const today = new Date().toISOString().slice(0, 10);
-        const limitKey = `xiaobei:chat:${envTag}:${today}:${identity}`;
+    console.log('[rl]', {
+      source: rateLimit.source,
+      count: rateLimit.count,
+      limited: rateLimit.limited,
+      ms: rateLimitEnd - rateLimitStart,
+      env: envTag,
+    });
 
-        const count = await kv.incr(limitKey);
-        if (count === 1) await kv.expire(limitKey, 86400);
-        rateLimitEnd = Date.now();
-
-        console.log('[rl][kv]', { identity, count, ms: rateLimitEnd - rateLimitStart, env: envTag });
-
-        if (count > 5) {
-          const lang = detectLanguage(messages || []);
-          const limitMessage =
-            lang === 'en'
-              ? "Aww, we've chatted enough for today. Come back tomorrow, okay?"
-              : '哎呀，今天的聊天次数到上限啦，明天再来找小北玩吧。';
-
-          return res.status(429).json({
-            code: 'RATE_LIMITED',
-            message: limitMessage,
-            retryAfterSeconds: 86400,
-          });
-        }
-      } catch (error) {
-        rateLimitEnd = Date.now();
-        console.warn('[rl][kv] skipped after error:', error);
-      }
-    } else {
-      console.warn('[rl][kv] skipped: KV_REST_API_URL or KV_REST_API_TOKEN is not configured');
+    if (rateLimit.limited) {
+      return res.status(429).json({
+        code: 'RATE_LIMITED',
+        message: rateLimit.source === 'kv' ? getLimitMessage(lang) : getFallbackLimitMessage(lang),
+        retryAfterSeconds: getRetryAfterSeconds(rateLimit.resetAt),
+      });
     }
 
     const apiKey = process.env.DEEPSEEK_API_KEY;
