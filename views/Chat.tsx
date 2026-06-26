@@ -2,6 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Bot, Loader2 } from 'lucide-react';
 import type { Message, ChatMessage } from '../types';
 
+type ChatApiError = {
+  code?: string;
+  error?: string;
+  message?: string;
+};
 
 export const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -17,7 +22,7 @@ export const Chat: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -43,12 +48,11 @@ export const Chat: React.FC = () => {
       const chatMessages: ChatMessage[] = messages
         .filter((m: Message) => m.role === 'user' || m.role === 'assistant')
         .map((m: Message): ChatMessage => ({
-          role: m.role,      // 这里 m.role 是 'user' | 'assistant'
-          content: m.content // string
+          role: m.role,
+          content: m.content
         }));
 
       const currentMsg: ChatMessage = { role: 'user', content: input };
-
       const allMessages: ChatMessage[] = [...chatMessages, currentMsg].slice(-20);
 
       const headers: Record<string, string> = {
@@ -66,23 +70,34 @@ export const Chat: React.FC = () => {
       });
 
       if (!response.ok) {
+        let errorData: ChatApiError = {};
+        try {
+          errorData = await response.json();
+        } catch {
+          errorData = { error: response.statusText };
+        }
+
+        console.error('Chat API error:', {
+          status: response.status,
+          ...errorData,
+        });
+
         if (response.status === 429) {
-          // 处理限流响应
-          const limitData = await response.json();
           const limitMsg: Message = {
             id: (Date.now() + 1).toString(),
             role: 'system',
-            content: limitData.message || 'Sorry, you have reached the daily chat limit. Come back tomorrow!',
+            content: errorData.message || 'Sorry, you have reached the daily chat limit. Come back tomorrow!',
             timestamp: new Date()
           };
           setMessages(prev => [...prev, limitMsg]);
           return;
         }
-        throw new Error('API request failed');
+
+        throw new Error(errorData.code || errorData.error || `API request failed with ${response.status}`);
       }
 
       const data = await response.json();
-      
+
       const newAssistantMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -91,15 +106,14 @@ export const Chat: React.FC = () => {
       };
 
       setMessages(prev => [...prev, newAssistantMsg]);
-
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'system',
-        content: error instanceof TypeError && error.message.includes('network') 
-          ? '网络连接不稳定，小北暂时收不到消息。请检查网络后重试，嗷呜～' 
-          : '抱歉，小北的大脑暂时短路了，请稍后再试。',
+        content: error instanceof TypeError && error.message.includes('network')
+          ? '网络连接不稳定，小北暂时收不到消息。请检查网络后重试。'
+          : '抱歉，小北暂时连不上聊天服务，请稍后再试。',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMsg]);
@@ -110,7 +124,7 @@ export const Chat: React.FC = () => {
 
   return (
     <div className="chat-container max-w-2xl mx-auto h-[600px] flex flex-col bg-white dark:bg-xiaobei-darkbg rounded-3xl shadow-xl overflow-hidden border-4 border-xiaobei-dark dark:border-xiaobei-darkaccent animate-fade-in">
-      
+
       {/* Header */}
       <div className="bg-xiaobei-dark dark:bg-xiaobei-darkaccent p-4 flex items-center gap-3 shadow-md z-10">
         <div className="w-10 h-10 rounded-full bg-xiaobei-light flex items-center justify-center overflow-hidden border-2 border-white/50">
@@ -133,7 +147,7 @@ export const Chat: React.FC = () => {
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div className={`flex max-w-[80%] gap-2 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-              
+
               {/* Avatar Bubble */}
               <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${msg.role === 'user' ? 'bg-xiaobei-accent dark:bg-xiaobei-darktext' : 'bg-xiaobei-dark dark:bg-xiaobei-darkaccent'}`}>
                 {msg.role === 'user' ? <User className="w-5 h-5 text-xiaobei-dark dark:text-xiaobei-dark" /> : <Bot className="w-5 h-5 text-xiaobei-light dark:text-xiaobei-dark" />}
@@ -148,7 +162,7 @@ export const Chat: React.FC = () => {
             </div>
           </div>
         ))}
-        
+
         {isTyping && (
           <div className="flex justify-start">
             <div className="flex max-w-[80%] gap-2">
