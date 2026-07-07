@@ -1,8 +1,26 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { kv } from '@vercel/kv';
+
+type VercelRequest = {
+  method?: string;
+  body?: unknown;
+  headers: Record<string, string | string[] | undefined>;
+  socket: {
+    remoteAddress?: string;
+  };
+};
+
+type VercelResponse = {
+  status(code: number): VercelResponse;
+  json(body: unknown): unknown;
+};
 
 type ChatMessage = {
   role: 'system' | 'user' | 'assistant';
+  content: string;
+};
+
+type ClientChatMessage = {
+  role: 'user' | 'assistant';
   content: string;
 };
 
@@ -20,6 +38,8 @@ type RateLimitResult = {
 
 const DAILY_CHAT_LIMIT = 5;
 const ONE_DAY_SECONDS = 86400;
+const MAX_CHAT_HISTORY_MESSAGES = 20;
+const MAX_MESSAGE_CHARS = 1000;
 
 // Fallback only: Vercel serverless memory is ephemeral and per-instance.
 // This does not replace KV; it only prevents unlimited model calls while KV is unavailable.
@@ -68,6 +88,27 @@ function getFallbackLimitMessage(lang: string) {
 
 function getRetryAfterSeconds(resetAt: number) {
   return Math.max(1, Math.ceil((resetAt - Date.now()) / 1000));
+}
+
+function sanitizeMessageContent(content: unknown) {
+  return typeof content === 'string' ? content.trim().slice(0, MAX_MESSAGE_CHARS) : '';
+}
+
+function sanitizeClientMessages(messages: unknown): ClientChatMessage[] {
+  if (!Array.isArray(messages)) return [];
+
+  return messages
+    .filter((message): message is { role: unknown; content: unknown } => {
+      return Boolean(message) && typeof message === 'object' && 'role' in message && 'content' in message;
+    })
+    .map((message) => {
+      const role = message.role === 'assistant' ? 'assistant' : message.role === 'user' ? 'user' : null;
+      const content = sanitizeMessageContent(message.content);
+
+      return role && content ? { role, content } : null;
+    })
+    .filter((message): message is ClientChatMessage => message !== null)
+    .slice(-MAX_CHAT_HISTORY_MESSAGES);
 }
 
 async function checkKvRateLimit(identity: string, envTag: string): Promise<RateLimitResult> {
@@ -158,15 +199,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { messages, message } = req.body || {};
+    const { messages, message } = (req.body || {}) as {
+      messages?: unknown;
+      message?: unknown;
+    };
     let userMessage = '';
-    let chatHistory: ChatMessage[] = [];
+    let chatHistory: ClientChatMessage[] = [];
+    const safeMessages = sanitizeClientMessages(messages);
 
-    if (Array.isArray(messages) && messages.length) {
-      chatHistory = messages.slice(0, -1);
-      userMessage = messages[messages.length - 1]?.content || '';
-    } else if (typeof message === 'string') {
-      userMessage = message;
+    if (safeMessages.length) {
+      const lastMessage = safeMessages[safeMessages.length - 1];
+      if (lastMessage.role !== 'user') {
+        return res.status(400).json({ error: 'Last message must be from user' });
+      }
+      chatHistory = safeMessages.slice(0, -1);
+      userMessage = lastMessage.content;
+    } else {
+      userMessage = sanitizeMessageContent(message);
     }
 
     if (!userMessage) {
@@ -175,7 +224,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const envTag = process.env.NODE_ENV === 'development' ? 'dev' : 'prod';
     const lang = detectLanguage(
-      Array.isArray(messages) ? messages : [{ role: 'user', content: userMessage }]
+      safeMessages.length ? safeMessages : [{ role: 'user', content: userMessage }]
     );
     const rateLimitStart = Date.now();
     const rateLimit = await checkRateLimit(req, envTag);

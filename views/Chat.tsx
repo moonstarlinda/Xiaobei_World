@@ -128,7 +128,7 @@ export const Chat: React.FC = () => {
       {/* Header */}
       <div className="bg-xiaobei-dark dark:bg-xiaobei-darkaccent p-4 flex items-center gap-3 shadow-md z-10">
         <div className="w-10 h-10 rounded-full bg-xiaobei-light flex items-center justify-center overflow-hidden border-2 border-white/50">
-           <img src="https://placehold.co/100x100/F4E0C6/4A3B32?text=X" alt="Avatar" />
+           <img src="/images/avatar.png" alt="Xiaobei avatar" className="w-full h-full object-cover" />
         </div>
         <div>
           <h2 className="text-xiaobei-light font-bold text-lg">Chat with Xiaobei</h2>

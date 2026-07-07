@@ -7,11 +7,6 @@ export const photos: Photo[] = [
     desc: 'Xiaobei Wrapped in the Blanket'
   },
   {
-    id: 2,
-    url: '/images/photo_Xiaobei_with_Sailor_Moon.jpg',
-    desc: 'XiaoBei With Sailor Moon~'
-  },
-  {
     id: 3,
     url: '/images/photo_good_night_on_the_moon.jpg',
     desc: 'Good Night on the Moon'
@@ -23,7 +18,7 @@ export const photos: Photo[] = [
   },
   {
     id: 5,
-    url: '/images/photo_lying_in_neural_nework_with_heart.jpg',
+    url: '/images/photo_lying_in_neural_nework_with_heart.png',
     desc: 'Lying in Neural Network with Heart'
   },
   {
@@ -45,6 +40,11 @@ export const photos: Photo[] = [
     id: 9,
     url: '/images/photo_Xiaobei_Chinese_Traditional_New_Year_2026.jpg',
     desc: 'New Year 2026 in Chinese Traditional'
+  },
+  {
+    id: 10,
+    url: '/images/photo_xiaobei_and_xiaoxia.jpg',
+    desc: 'Xiaobei and OpenClaw'
   }
 
   
