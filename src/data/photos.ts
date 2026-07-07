@@ -44,7 +44,7 @@ export const photos: Photo[] = [
   {
     id: 10,
     url: '/images/photo_xiaobei_and_xiaoxia.jpg',
-    desc: 'Xiaobei and OpenClaw'
+    desc: 'Xiaobei and Xiaoxia'
   }
 
   
