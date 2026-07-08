@@ -46,7 +46,4 @@ export const photos: Photo[] = [
     url: '/images/photo_xiaobei_and_xiaoxia.jpg',
     desc: 'Xiaobei and Xiaoxia'
   }
-
-  
-  
 ];

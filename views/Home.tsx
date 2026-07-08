@@ -62,7 +62,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Diary Section */}
-      <section className="bg-white/50 rounded-3xl p-6 md:p-8 shadow-sm dark:bg-xiaobei-darkbg/50">
+      <section className="bg-[#fffdf7]/85 rounded-3xl p-6 md:p-8 shadow-sm ring-1 ring-xiaobei-dark/10 dark:bg-xiaobei-darkbg/50 dark:ring-xiaobei-darkaccent/20">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold flex items-center gap-2 text-xiaobei-dark dark:text-xiaobei-darktext">
             <BookOpen className="w-6 h-6" />
@@ -83,7 +83,7 @@ export const Home: React.FC = () => {
             .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
             .slice(0, 3)
             .map((entry, index) => (
-              <div key={index} className="diary-card bg-white p-6 rounded-2xl border-l-4 border-xiaobei-dark shadow-sm hover:shadow-md transition-shadow dark:bg-xiaobei-darkbg dark:border-xiaobei-darktext">
+              <div key={index} className="diary-card bg-[#fff8ec] p-6 rounded-2xl border-l-4 border-xiaobei-dark shadow-sm ring-1 ring-xiaobei-dark/5 hover:shadow-md transition-shadow dark:bg-xiaobei-darkbg dark:border-xiaobei-darktext dark:ring-xiaobei-darkaccent/20">
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
                   <h3 className="text-xl font-bold text-xiaobei-dark dark:text-xiaobei-darktext">{entry.title}</h3>
                   <span className="text-sm font-mono text-xiaobei-dark/60 bg-xiaobei-light px-2 py-1 rounded-md dark:text-xiaobei-darktext/60 dark:bg-xiaobei-darkbg">{entry.date}</span>

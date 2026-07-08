@@ -42,7 +42,7 @@ export const Comics: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stone-100 dark:bg-xiaobei-dark/95 animate-fade-in pb-20 -mt-6 pt-10">
+    <div className="min-h-screen bg-[#fbf2e2]/85 dark:bg-xiaobei-dark/95 animate-fade-in pb-20 -mt-6 pt-10">
       
       {/* Header */}
       <div className="text-center pb-16 space-y-3 px-4">
@@ -70,10 +70,10 @@ export const Comics: React.FC = () => {
               <div className="relative z-20 w-3/4 max-w-[180px] aspect-[4/5] transition-all duration-300 ease-out transform group-hover:-translate-y-3 group-hover:rotate-2 group-hover:scale-105">
                 
                 {/* White Border/Frame & Shadow */}
-                <div className="absolute inset-0 bg-white shadow-xl rounded-sm rotate-0 ring-1 ring-gray-200 dark:ring-gray-700"></div>
+                <div className="absolute inset-0 bg-[#fffefd] shadow-xl rounded-sm rotate-0 ring-1 ring-xiaobei-dark/10 dark:bg-xiaobei-darkbg dark:ring-gray-700"></div>
                 
                 {/* Inner Image Container */}
-                <div className="absolute inset-2 overflow-hidden bg-gray-100 dark:bg-gray-800">
+                <div className="absolute inset-2 overflow-hidden bg-[#f1e4ce] dark:bg-gray-800">
                   <img
                     src={comic.imageUrl}
                     alt={comic.title}
