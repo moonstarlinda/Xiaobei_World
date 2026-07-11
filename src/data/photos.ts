@@ -1,6 +1,12 @@
 import { Photo } from '../../types';
+import { hasReachedShanghaiDate } from '../theme/birthday';
 
 export const photos: Photo[] = [
+  ...(hasReachedShanghaiDate('2026-07-13') ? [{
+    id: 11,
+    url: '/images/photo_Xiaobei_1st_Birthday.png',
+    desc: "Xiaobei's 1st Birthday"
+  }] : []),
   {
     id: 1,
     url: '/images/photo_Xiao_Bei_wrapped_in_the_blanket.png',

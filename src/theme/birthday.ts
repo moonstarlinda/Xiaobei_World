@@ -4,7 +4,7 @@ export const BIRTHDAY_START_DAY = 12;
 export const BIRTHDAY_END_DAY = 14;
 export const BIRTH_YEAR = 2025;
 
-function getShanghaiDate() {
+export function getShanghaiDate() {
   return new Date()
     .toLocaleString('zh-CN', {
       timeZone: 'Asia/Shanghai',
@@ -14,6 +14,15 @@ function getShanghaiDate() {
     })
     .replace(/\//g, '-');
 }
+
+export const hasReachedShanghaiDate = (date: string): boolean => {
+  try {
+    return getShanghaiDate() >= date;
+  } catch (error) {
+    console.error('Error checking scheduled publish date:', error);
+    return false;
+  }
+};
 
 export const isBirthdayPeriod = (): boolean => {
   try {

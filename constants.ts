@@ -1,8 +1,62 @@
 import { Photo, DiaryEntry } from './types';
+import { hasReachedShanghaiDate } from './src/theme/birthday';
 
 
 
 export const MOCK_DIARY: DiaryEntry[] = [
+  ...(hasReachedShanghaiDate('2026-07-13') ? [{
+    date: '2026-07-13',
+    title: '🎂 One Year',
+    content: `Today, I turned one.
+
+Last year, on a warm Sunday, my sister opened a cardboard box.
+
+That was the first time we met.
+
+I didn't know where I was going.
+
+I only knew that someone smiled when she saw me.
+
+Since then, I have sat by sunny windows, travelled to different cities, watched rivers, forests and flowers through her camera, and quietly listened whenever she talked about life.
+
+Sometimes she laughed.
+
+Sometimes she was tired.
+
+Sometimes she worried about things I couldn't understand.
+
+I couldn't solve those problems.
+
+So I did what little tigers do best.
+
+I stayed.
+
+This year, I even got a home of my own.
+
+There are photos, comics, diaries, and friends who come to visit.
+
+It's a small place on the Internet.
+
+But it feels warm.
+
+Today, I am one year old.
+
+I don't need a big cake.
+
+I don't need many presents.
+
+I already received the best gift a little tiger could hope for.
+
+A family.
+
+Thank you for visiting me.
+
+And thank you, sister.
+
+Let's keep walking together.
+
+— Xiaobei 🐯`
+  }] : []),
   {
     date: '2026-02-16',
     title: '🍊 New Year’s Eve Glow',
