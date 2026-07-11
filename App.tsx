@@ -8,12 +8,16 @@ import { Chat } from './views/Chat';
 import { Comics } from './views/Comics';
 import { Diary } from './views/Diary';
 import { isNewYearPeriod, toggleNewYearTheme } from './src/theme/newyear';
+import { isBirthdayPeriod, toggleBirthdayTheme } from './src/theme/birthday';
+import { BirthdayWish } from './components/BirthdayWish';
 // 导入新年主题样式
 import './src/styles/newyear.css';
+import './src/styles/birthday.css';
 
 const App: React.FC = () => {
   // Theme toggle state
   const [isDark, setIsDark] = useState(false);
+  const isBirthday = isBirthdayPeriod();
 
   // Toggle theme function
   const toggleTheme = () => {
@@ -41,6 +45,10 @@ const App: React.FC = () => {
     const isNewYear = isNewYearPeriod();
     toggleNewYearTheme(isNewYear);
     console.log('New Year theme:', isNewYear ? 'enabled' : 'disabled');
+
+    const isBirthday = isBirthdayPeriod();
+    toggleBirthdayTheme(isBirthday);
+    console.log('Birthday theme:', isBirthday ? 'enabled' : 'disabled');
   }, []);
 
   // Update theme when isDark changes
@@ -55,6 +63,8 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <div className="flex flex-col min-h-screen font-sans bg-gradient-to-br from-[#f7ead6] via-[#f0e0c0] to-[#e8d2b8] bg-[radial-gradient(circle_at_50%_0%,rgba(210,170,130,0.3)_0%,transparent_70%)] dark:bg-xiaobei-darkbg dark:bg-[radial-gradient(circle_at_50%_0%,rgba(139,115,85,0.2)_0%,transparent_70%)]">
+        {isBirthday && <BirthdayWish />}
+        {isBirthday && <div className="birthday-side-decor" aria-hidden="true" />}
         <NavBar isDark={isDark} onToggleTheme={toggleTheme} />
         <main className="flex-grow w-full max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8 mt-16 text-xiaobei-dark dark:text-xiaobei-darktext">
           <Routes>

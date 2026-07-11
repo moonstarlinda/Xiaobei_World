@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Loader2 } from 'lucide-react';
 import type { Message, ChatMessage } from '../types';
+import { isBirthdayPeriod, isBirthdayToday } from '../src/theme/birthday';
 
 type ChatApiError = {
   code?: string;
@@ -9,11 +10,17 @@ type ChatApiError = {
 };
 
 export const Chat: React.FC = () => {
+  const birthdayActive = isBirthdayPeriod();
+  const birthdayToday = isBirthdayToday();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'init-1',
       role: 'system',
-      content: 'Hello! I am Xiaobei. Do you have any treats?',
+      content: birthdayActive
+        ? birthdayToday
+          ? 'Hello! I am Xiaobei. Is that birthday cake for me?'
+          : 'Hello! I am Xiaobei. My birthday week smells like cake.'
+        : 'Hello! I am Xiaobei. Do you have any treats?',
       timestamp: new Date()
     }
   ]);
@@ -136,14 +143,21 @@ export const Chat: React.FC = () => {
       <div className="chat-container w-full max-w-[45rem] h-[640px] flex flex-col bg-[#fffdf7] dark:bg-xiaobei-darkbg rounded-2xl shadow-xl overflow-hidden border border-xiaobei-dark/15 dark:border-xiaobei-darkaccent/40">
         <div className="bg-xiaobei-dark dark:bg-xiaobei-darkaccent p-4 flex items-center justify-between gap-3 shadow-md z-10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-xiaobei-light flex items-center justify-center overflow-hidden border-2 border-white/50">
+            <div className={`w-10 h-10 rounded-full bg-xiaobei-light flex items-center justify-center border-2 border-white/50 ${birthdayActive ? 'birthday-chat-avatar' : 'overflow-hidden'}`}>
               <img src="/images/avatar.png" alt="Xiaobei avatar" className="w-full h-full object-cover" />
             </div>
             <div>
               <h3 className="text-xiaobei-light dark:text-xiaobei-dark font-bold text-lg">Xiaobei</h3>
-              <p className="text-xiaobei-light/75 dark:text-xiaobei-dark/75 text-xs">Soft paws on keyboard</p>
+              <p className="text-xiaobei-light/75 dark:text-xiaobei-dark/75 text-xs">
+                {birthdayActive ? 'Birthday paws on keyboard' : 'Soft paws on keyboard'}
+              </p>
             </div>
           </div>
+          {birthdayActive && (
+            <div className="birthday-chat-stamp hidden sm:block text-xs font-bold">
+              July 13
+            </div>
+          )}
           <div className="hidden sm:flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-xiaobei-light dark:text-xiaobei-dark">
             <span className={`block w-2 h-2 rounded-full ${isTyping ? 'bg-yellow-400 animate-pulse' : 'bg-green-400'}`}></span>
             {isTyping ? 'Typing...' : 'Online'}

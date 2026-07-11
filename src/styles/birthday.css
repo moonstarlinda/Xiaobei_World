@@ -1,0 +1,710 @@
+/* Xiaobei Birthday Week */
+
+body.theme-birthday {
+  background:
+    radial-gradient(circle at 50% 13rem, rgba(255, 255, 255, 0.72), transparent 15rem),
+    radial-gradient(circle at 12% 16%, rgba(255, 229, 148, 0.55), transparent 24rem),
+    radial-gradient(circle at 82% 12%, rgba(255, 177, 190, 0.38), transparent 22rem),
+    linear-gradient(135deg, #fff7e8 0%, #f8e0bd 48%, #ffe6d5 100%);
+}
+
+body.theme-birthday::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.75;
+  background-image:
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.78) 0 0.18rem, transparent 0.2rem),
+    radial-gradient(circle, rgba(255, 160, 178, 0.7) 0 0.16rem, transparent 0.18rem),
+    linear-gradient(35deg, transparent 45%, rgba(113, 176, 214, 0.45) 46% 53%, transparent 54%),
+    linear-gradient(-25deg, transparent 45%, rgba(255, 201, 100, 0.55) 46% 53%, transparent 54%);
+  background-position: 34px 42px, 110px 132px, 46px 90px, 150px 52px;
+  background-size: 210px 170px;
+}
+
+.dark body.theme-birthday {
+  background:
+    radial-gradient(circle at 12% 16%, rgba(255, 210, 105, 0.18), transparent 24rem),
+    radial-gradient(circle at 82% 12%, rgba(255, 143, 163, 0.14), transparent 22rem),
+    linear-gradient(135deg, #2a1c17 0%, #3a2a22 52%, #1a1512 100%);
+}
+
+body.theme-birthday #root {
+  position: relative;
+  z-index: 1;
+}
+
+body.theme-birthday nav {
+  background: rgba(255, 249, 238, 0.92);
+  border-bottom-color: #6f5647;
+  box-shadow: 0 8px 28px rgba(111, 86, 71, 0.12);
+}
+
+body.theme-birthday nav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1.15rem;
+  height: 1.15rem;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 0.38rem 0.7rem, #f7a8ba 0 0.24rem, transparent 0.26rem),
+    radial-gradient(circle at 1.05rem 0.72rem, #9bd2e6 0 0.24rem, transparent 0.26rem),
+    radial-gradient(circle at 1.72rem 0.7rem, #ffd879 0 0.24rem, transparent 0.26rem),
+    linear-gradient(135deg, transparent 0.62rem, rgba(111, 86, 71, 0.36) 0.64rem 0.68rem, transparent 0.7rem);
+  background-size: 3.2rem 1.15rem;
+  background-repeat: repeat-x;
+}
+
+body.theme-birthday main {
+  max-width: 74rem;
+}
+
+.birthday-page {
+  position: relative;
+  padding-top: 1.5rem;
+}
+
+.birthday-page::before,
+.birthday-page::after {
+  content: "";
+  position: fixed;
+  top: 6rem;
+  bottom: 2rem;
+  width: 4rem;
+  pointer-events: none;
+  opacity: 0.9;
+  background-image:
+    radial-gradient(circle at 50% 1rem, #f7a8ba 0 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 50% 4rem, #9bd2e6 0 0.28rem, transparent 0.3rem),
+    radial-gradient(circle at 50% 7rem, #ffd879 0 0.3rem, transparent 0.32rem),
+    radial-gradient(circle at 50% 10rem, #f3b6d6 0 0.24rem, transparent 0.26rem);
+  background-size: 4rem 12rem;
+  background-repeat: repeat-y;
+}
+
+.birthday-page::before {
+  left: 0.8rem;
+}
+
+.birthday-page::after {
+  right: 0.8rem;
+}
+
+.birthday-party-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.birthday-confetti,
+.birthday-star-bundle {
+  position: absolute;
+  z-index: 4;
+  color: rgba(111, 86, 71, 0.62);
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.75);
+}
+
+.birthday-confetti-left {
+  left: 4%;
+  top: 5rem;
+  font-size: 2rem;
+  color: #f7a8ba;
+  animation: birthdayFloat 3.2s ease-in-out infinite;
+}
+
+.birthday-confetti-right {
+  right: 6%;
+  top: 9rem;
+  font-size: 2.35rem;
+  color: #9bd2e6;
+  animation: birthdayFloat 3.8s ease-in-out infinite reverse;
+}
+
+.birthday-star-bundle {
+  right: 17%;
+  top: 4.5rem;
+  font-size: 2rem;
+  color: #ffd879;
+  letter-spacing: 0.15rem;
+  animation: birthdayFloat 4s ease-in-out infinite;
+}
+
+.birthday-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 24rem;
+  border-radius: 2rem;
+  padding: 4.75rem 2.25rem 3rem;
+  overflow: visible;
+}
+
+.birthday-hero::before {
+  content: "July 13 · Xiaobei's Birthday";
+  position: absolute;
+  top: 1.15rem;
+  right: 1.35rem;
+  z-index: 5;
+  border: 1px solid rgba(74, 59, 50, 0.15);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.9);
+  box-shadow: 0 10px 30px rgba(196, 128, 63, 0.16);
+  color: #4a3b32;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.45rem 0.8rem;
+}
+
+.birthday-hero::after {
+  content: "";
+  position: absolute;
+  inset: 1.1rem 0.25rem 0.2rem;
+  z-index: -1;
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at 72% 28%, rgba(255, 255, 255, 0.95) 0 1.1rem, transparent 1.15rem),
+    radial-gradient(circle at 78% 32%, rgba(247, 168, 186, 0.78) 0 2.2rem, transparent 2.25rem),
+    radial-gradient(circle at 64% 36%, rgba(155, 210, 230, 0.72) 0 1.7rem, transparent 1.75rem),
+    linear-gradient(180deg, rgba(255, 253, 247, 0.74), rgba(255, 239, 215, 0.4));
+  box-shadow:
+    inset 0 0 0 1px rgba(111, 86, 71, 0.08),
+    0 28px 70px rgba(111, 86, 71, 0.13);
+}
+
+.birthday-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+  padding: 0.65rem;
+  border-radius: 999px;
+  background: #f8e0bd;
+  box-shadow:
+    inset 0 0 0 0.7rem #6f5647,
+    0 22px 55px rgba(111, 86, 71, 0.18);
+}
+
+.birthday-avatar-wrap::before {
+  content: "";
+  position: absolute;
+  width: 4.2rem;
+  height: 4.2rem;
+  left: 50%;
+  top: -1.75rem;
+  z-index: 3;
+  transform: translateX(-50%) rotate(-8deg);
+  background:
+    radial-gradient(circle at 50% 18%, #fff9d8 0 0.42rem, transparent 0.45rem),
+    linear-gradient(145deg, #ffce62 0 48%, #ff9dab 49% 100%);
+  clip-path: polygon(50% 0, 91% 100%, 9% 100%);
+  filter: drop-shadow(0 8px 12px rgba(89, 51, 30, 0.22));
+}
+
+.birthday-avatar-wrap::after {
+  content: "";
+  position: absolute;
+  width: 5rem;
+  height: 0.65rem;
+  left: 50%;
+  top: 1.98rem;
+  z-index: 4;
+  transform: translateX(-50%) rotate(-8deg);
+  border-radius: 999px;
+  background: #f7ead6;
+  box-shadow: inset 0 0 0 2px rgba(74, 59, 50, 0.12);
+}
+
+.birthday-note {
+  border: 1px solid rgba(111, 86, 71, 0.18);
+  background: rgba(255, 253, 247, 0.86);
+  box-shadow: 0 16px 45px rgba(196, 128, 63, 0.14);
+  backdrop-filter: blur(6px);
+}
+
+.birthday-actions a {
+  background: rgba(255, 253, 247, 0.72);
+  box-shadow: 0 10px 0 rgba(111, 86, 71, 0.1), 0 18px 35px rgba(111, 86, 71, 0.12);
+}
+
+.birthday-actions a:first-child {
+  background: #6f5647;
+  color: #fff8ec;
+}
+
+.birthday-actions a:hover {
+  transform: translateY(-0.2rem);
+}
+
+.birthday-sparkle {
+  animation: birthdayFloat 2.8s ease-in-out infinite;
+}
+
+body.theme-birthday .chat-container {
+  box-shadow: 0 22px 60px rgba(196, 128, 63, 0.2);
+}
+
+body.theme-birthday .chat-container > div:first-child {
+  background: linear-gradient(135deg, #5a4032, #8b6248);
+}
+
+body.theme-birthday .chat-messages {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 206, 98, 0.18), transparent 16rem),
+    linear-gradient(135deg, #fff8ec, #fbecd8);
+}
+
+body.theme-birthday .chat-input {
+  background: #fff8ec;
+}
+
+body.theme-birthday .diary-card {
+  background: rgba(255, 253, 247, 0.86);
+  border-left-color: #6f5647;
+  box-shadow: 0 14px 35px rgba(111, 86, 71, 0.1);
+}
+
+body.theme-birthday section:has(.diary-card) {
+  background: rgba(255, 253, 247, 0.72);
+  border: 1px solid rgba(111, 86, 71, 0.12);
+  box-shadow: 0 28px 80px rgba(111, 86, 71, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.dark body.theme-birthday .birthday-hero::before,
+.dark body.theme-birthday .birthday-note {
+  border-color: rgba(244, 224, 198, 0.2);
+  background: rgba(42, 28, 23, 0.78);
+  color: #f4e0c6;
+}
+
+.dark body.theme-birthday .chat-messages {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 206, 98, 0.12), transparent 16rem),
+    linear-gradient(135deg, #3a2a22, #2a1c17);
+}
+
+.dark body.theme-birthday .chat-input {
+  background: #2a1c17;
+}
+
+@keyframes birthdayFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-0.35rem) rotate(2deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .birthday-page {
+    padding-top: 2rem;
+  }
+
+  .birthday-page::before,
+  .birthday-page::after,
+  .birthday-star-bundle,
+  .birthday-confetti {
+    display: none;
+  }
+
+  .birthday-hero {
+    padding: 4.25rem 1rem 2rem;
+    min-height: auto;
+  }
+
+  .birthday-hero::before {
+    left: 50%;
+    right: auto;
+    top: 0.75rem;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+}
+
+/* One-year-old cream cake with pink/blue piping and subtle tiger stripes. */
+.birthday-cake { position: relative; width: 15rem; height: 13rem; margin: 1rem auto 0; border: 0; background: transparent; cursor: pointer; filter: drop-shadow(0 18px 20px rgba(103,83,76,.16)); transition: transform 180ms ease; }
+.birthday-cake:hover { transform: translateY(-.25rem) rotate(-1deg); }
+.birthday-cake:active { transform: scale(.97); }
+.cake-tier { position: absolute; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg,#f7ecdd,#fffdf8 45%,#f5e7d6); border: 1px solid #ead9c8; }
+.cake-tier::after { content: ""; position: absolute; inset: 0 auto 0 12%; width: 8%; opacity: .5; background: repeating-linear-gradient(165deg,#d98b62 0 5px,transparent 5px 13px); }
+.cake-tier-top { bottom: 5.2rem; width: 8.5rem; height: 3.6rem; border-radius: 1rem 1rem .5rem .5rem; }
+.cake-tier-bottom { bottom: 1.7rem; width: 12rem; height: 4rem; border-radius: 1rem 1rem .7rem .7rem; }
+.cake-tier b,.cake-tier em { position: relative; z-index: 2; color: #ca8ca0; font-style: normal; line-height: 3.4rem; font-size: 1.15rem; }
+.cake-tier b { font-size: 1.65rem; color: #8bbdd3; }
+.cake-tier-bottom::before,.cake-tier-top::before { content: "✿  ✿  ✿  ✿"; position: absolute; z-index: 3; left: 0; right: 0; top: -.48rem; color: #efb5c5; font-size: .86rem; letter-spacing: .15rem; text-shadow: 12px 1px #a9d5e8,-12px 1px #a9d5e8; }
+.cake-plate { position: absolute; left: 50%; bottom: 1rem; width: 14rem; height: 1rem; transform: translateX(-50%); border-radius: 50%; background: #b9dcec; border: 2px solid #fff; }
+.cake-candle { position: absolute; z-index: 4; left: 50%; top: .75rem; width: .55rem; height: 2.4rem; transform: translateX(-50%); border-radius: .3rem; background: repeating-linear-gradient(-45deg,#a9d5e8 0 5px,#fff 5px 10px); }
+.cake-candle i { position: absolute; left: 50%; top: -1.2rem; width: .9rem; height: 1.25rem; transform: translateX(-50%) rotate(5deg); border-radius: 70% 30% 65% 35%; background: radial-gradient(circle at 50% 65%,#fff7bd 0 18%,#ffd36c 22% 55%,#f09a63 58%); animation: candleFlicker 1.2s ease-in-out infinite alternate; }
+.cake-top-flowers { position: absolute; z-index: 5; top: 2.8rem; left: 50%; width: 8rem; transform: translateX(-50%); color: #a9d5e8; font-size: 1rem; }
+.cake-hint { position: absolute; left: 50%; bottom: -.8rem; transform: translateX(-50%); width: max-content; color: #7b6258; font-size: .72rem; font-weight: 700; }
+.birthday-wish-layer { position: fixed; inset: 0; z-index: 100; overflow: hidden; pointer-events: none; }
+.birthday-click-spark { position: absolute; font-size: 1rem; text-shadow: 0 2px 4px rgba(92,70,60,.18); animation: wishSpark 1.15s cubic-bezier(.2,.7,.2,1) forwards; }
+@keyframes candleFlicker { to { transform: translateX(-50%) rotate(-7deg) scale(.9,1.08); } }
+@keyframes wishSpark { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.3); } 16% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(-50% + var(--spark-x)),-95px) rotate(170deg) scale(1.15); } }
+@media (min-width: 768px) { .birthday-hero { padding-right: 15rem; } .birthday-cake { position: absolute; right: .15rem; bottom: 2.8rem; margin: 0; } }
+@media (prefers-reduced-motion: reduce) { .cake-candle i,.birthday-click-spark { animation-duration: 1ms; } }
+
+/* Shared three-dot rails: the same group rhythm as the navigation garland. */
+.birthday-page::before,
+.birthday-page::after { display: none; }
+.birthday-side-decor,
+.birthday-side-decor::after {
+  position: fixed;
+  top: 5.15rem;
+  bottom: 0;
+  width: 1.15rem;
+  z-index: 30;
+  pointer-events: none;
+  content: "";
+  opacity: .92;
+  background:
+    radial-gradient(circle at .58rem .38rem, #f7a8ba 0 .24rem, transparent .26rem),
+    radial-gradient(circle at .58rem 1.05rem, #9bd2e6 0 .24rem, transparent .26rem),
+    radial-gradient(circle at .58rem 1.72rem, #ffd879 0 .24rem, transparent .26rem);
+  background-size: 1.15rem 3.2rem;
+  background-repeat: repeat-y;
+}
+.birthday-side-decor { left: .15rem; }
+.birthday-side-decor::after { right: .15rem; }
+
+/* A single card surface for the hero; its shadow lifts gently on hover. */
+.birthday-hero {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 27%, rgba(247,168,186,.65) 0 2.2rem, transparent 2.25rem),
+    radial-gradient(circle at 69% 25%, rgba(255,255,255,.92) 0 1.1rem, transparent 1.15rem),
+    linear-gradient(180deg, rgba(255,253,247,.92), rgba(255,242,221,.78));
+  border: 1px solid rgba(111,86,71,.1);
+  box-shadow: 0 22px 55px rgba(111,86,71,.13);
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+.birthday-hero:hover {
+  transform: translateY(-4px);
+  border-color: rgba(242,185,200,.7);
+  box-shadow: 0 30px 70px rgba(111,86,71,.19);
+}
+.birthday-hero::after { display: none; }
+.birthday-hero::before { content: "July 13 · Xiaobei's Birthday"; }
+
+/* Small illustrated-stamp badge in place of the former announcement panel. */
+.birthday-note {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  width: auto;
+  padding: .55rem .85rem .55rem .55rem;
+  color: #6f5647;
+  text-align: left;
+  background: #fff8e9;
+  border: 2px dashed #d69070;
+  border-radius: .7rem;
+  box-shadow: 3px 3px 0 rgba(214,144,112,.18);
+  transform: rotate(-1deg);
+  backdrop-filter: none;
+}
+.birthday-note::after {
+  content: "";
+  position: absolute;
+  width: 1.15rem;
+  height: 1.3rem;
+  right: -.55rem;
+  top: -.65rem;
+  transform: rotate(18deg);
+  border-radius: 50% 50% 45% 45%;
+  background: #f7a8ba;
+  clip-path: polygon(43% 0,58% 0,61% 31%,88% 18%,94% 30%,68% 45%,91% 62%,82% 75%,58% 55%,50% 100%,41% 55%,17% 75%,9% 62%,33% 45%,6% 30%,12% 18%,39% 31%);
+}
+.birthday-note > span:last-child { display: grid; gap: .08rem; }
+.birthday-note strong { font-size: .82rem; line-height: 1.15; }
+.birthday-note small { font-size: .68rem; opacity: .75; }
+.birthday-stamp-mark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  border: 2px solid #d69070;
+  border-radius: .65rem .65rem .8rem .8rem;
+  color: #d69070;
+  font-size: 1.1rem;
+  background: #fffdf7;
+}
+
+/* Birthday dark mode uses dark surfaces with cream text instead of grey overlays. */
+.dark body.theme-birthday nav { background: rgba(28,22,18,.96); border-bottom-color: #9b8065; }
+.dark body.theme-birthday .birthday-hero {
+  color: #fff1dc;
+  background:
+    radial-gradient(circle at 78% 27%, rgba(226,132,157,.24) 0 2.2rem, transparent 2.25rem),
+    radial-gradient(circle at 69% 25%, rgba(255,249,237,.14) 0 1.1rem, transparent 1.15rem),
+    linear-gradient(145deg, #382d27, #2a211d);
+  border-color: rgba(244,224,198,.2);
+  box-shadow: 0 25px 65px rgba(0,0,0,.35);
+}
+.dark body.theme-birthday .birthday-hero :is(h1,p) { color: #fff1dc !important; }
+.dark body.theme-birthday .birthday-hero::before { background: #59473d; border-color: #8d7463; color: #fff1dc; }
+.dark body.theme-birthday .birthday-note { background: #fff3dc; border-color: #e19a7b; color: #62493d; }
+.dark body.theme-birthday .birthday-note :is(strong,small,span) { color: inherit !important; }
+.dark body.theme-birthday .birthday-actions a { border-color: #f4e0c6; background: #352a24; color: #fff1dc; }
+.dark body.theme-birthday .birthday-actions a:first-child { background: #f4e0c6; color: #30241e; }
+.dark body.theme-birthday section:has(.diary-card) { background: #302721; border-color: rgba(244,224,198,.18); }
+.dark body.theme-birthday .diary-card { background: #211a17; border-left-color: #e4b8a0; }
+.dark body.theme-birthday .diary-card :is(h3,p,span) { color: #f8e8d3 !important; }
+.dark body.theme-birthday .diary-card span { background: #44362e !important; }
+.dark body.theme-birthday main > div > div:first-child :is(h2,p) { color: #f8e8d3 !important; }
+.dark body.theme-birthday .chat-container { background: #251d19; border-color: #806856; }
+.dark body.theme-birthday .chat-container > div:first-child { background: linear-gradient(135deg,#4b392f,#725744); }
+.dark body.theme-birthday .chat-container > div:first-child :is(h3,p,span) { color: #fff1dc !important; }
+.dark body.theme-birthday .chat-messages { background: linear-gradient(135deg,#2d231e,#1f1916); }
+.dark body.theme-birthday .chat-input { background: #251d19; color: #f8e8d3; }
+.dark body.theme-birthday .chat-input :is(textarea,p) { color: #f8e8d3 !important; }
+.dark body.theme-birthday .cake-hint { color: #f4e0c6; }
+
+@media (max-width: 767px) {
+  .birthday-side-decor,
+  .birthday-side-decor::after { display: none; }
+  .birthday-hero { overflow: hidden; }
+  .birthday-note { margin-inline: auto; }
+}
+
+/* One clean avatar frame: the regular image border is absorbed by this frame. */
+.birthday-avatar-wrap {
+  padding: .78rem;
+  background: #6f5647;
+  box-shadow: 0 20px 48px rgba(78,57,47,.24);
+  transition: transform .28s ease, box-shadow .28s ease, background-color .28s ease;
+}
+.birthday-avatar-wrap:hover {
+  transform: translateY(-5px) scale(1.07);
+  background: #e0c6a4;
+  box-shadow: 0 28px 62px rgba(78,57,47,.3);
+}
+.birthday-avatar-wrap > img {
+  border: 0 !important;
+  transform: none !important;
+  box-shadow: none;
+}
+
+/* Larger, centered and symmetrical party hat. */
+.birthday-avatar-wrap::before {
+  width: 5.8rem;
+  height: 5.5rem;
+  top: -3.15rem;
+  left: 50%;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 93% 100%, 7% 100%);
+  background:
+    linear-gradient(90deg, transparent 0 37%, rgba(255,224,126,.95) 37% 63%, transparent 63%),
+    linear-gradient(135deg, #f59ab2 0 49%, #ffb3c5 50% 100%);
+  filter: drop-shadow(0 7px 8px rgba(89,51,30,.2));
+}
+.birthday-hat-pom {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: -3.72rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  transform: translateX(-50%);
+  border: 2px solid rgba(111,86,71,.16);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fffef7 0 24%, #fff1bd 28% 58%, #f0b75f 64% 100%);
+  box-shadow: 0 4px 7px rgba(89,51,30,.18);
+  pointer-events: none;
+}
+.birthday-avatar-wrap::after {
+  width: 6.6rem;
+  height: .82rem;
+  top: 1.62rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg,#fffdf5,#f4e2c8);
+  box-shadow: inset 0 0 0 2px rgba(111,86,71,.14), 0 4px 7px rgba(89,51,30,.14);
+}
+
+.dark body.theme-birthday .birthday-avatar-wrap {
+  background: #8a6c5a;
+  box-shadow: 0 22px 52px rgba(0,0,0,.38);
+}
+.dark body.theme-birthday .birthday-avatar-wrap:hover { background: #8b7355; }
+
+/* The hat rotates as one object so its cone, brim and pom stay aligned. */
+.birthday-avatar-wrap::before,
+.birthday-avatar-wrap::after,
+.birthday-hat-pom { display: none; }
+.birthday-party-hat {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  top: -3.45rem;
+  width: 6.6rem;
+  height: 6.3rem;
+  transform: translateX(-50%) rotate(10deg);
+  transform-origin: 50% 88%;
+  pointer-events: none;
+  filter: drop-shadow(0 7px 8px rgba(89,51,30,.2));
+  animation: birthdayHatDrift 3.4s ease-in-out infinite;
+}
+.birthday-party-hat-cone {
+  position: absolute;
+  left: 50%;
+  bottom: .65rem;
+  width: 5.8rem;
+  height: 5.5rem;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0,93% 100%,7% 100%);
+  background:
+    linear-gradient(90deg,transparent 0 37%,rgba(255,224,126,.95) 37% 63%,transparent 63%),
+    linear-gradient(135deg,#f59ab2 0 49%,#ffb3c5 50% 100%);
+}
+.birthday-party-hat-brim {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: .25rem;
+  width: 6.6rem;
+  height: .82rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg,#fffdf5,#f4e2c8);
+  box-shadow: inset 0 0 0 2px rgba(111,86,71,.14),0 4px 7px rgba(89,51,30,.14);
+}
+.birthday-party-hat-pom {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: -.48rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  transform: translateX(-50%);
+  border: 2px solid rgba(111,86,71,.16);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%,#fffef7 0 24%,#fff1bd 28% 58%,#f0b75f 64% 100%);
+  box-shadow: 0 4px 7px rgba(89,51,30,.18);
+}
+
+/* The hero already has decorative stars; the old corner date pill is removed. */
+.birthday-hero::before { display: none; }
+
+/* Chat birthday details echo the illustrated stamp on the home page. */
+.birthday-chat-stamp {
+  position: relative;
+  padding: .42rem 1rem .42rem 1.7rem;
+  color: #6f5647;
+  background: #fff5df;
+  border: 2px dashed #e19a7b;
+  border-radius: .65rem;
+  box-shadow: 3px 3px 0 rgba(45,29,22,.14);
+  transform: rotate(-1.5deg);
+}
+.birthday-chat-stamp::before {
+  content: "♡";
+  position: absolute;
+  left: .5rem;
+  top: 50%;
+  color: #df8ca5;
+  font-size: .9rem;
+  transform: translateY(-52%);
+}
+.birthday-chat-stamp::after {
+  content: "";
+  position: absolute;
+  right: -.35rem;
+  top: -.38rem;
+  width: .72rem;
+  height: .72rem;
+  border-radius: 50%;
+  background: #9bd2e6;
+}
+.birthday-chat-avatar {
+  position: relative;
+  overflow: visible;
+  padding: 2px;
+  border-color: #f7a8ba !important;
+  background: linear-gradient(135deg,#f7a8ba,#9bd2e6);
+  box-shadow: 0 0 0 2px rgba(255,245,223,.55);
+}
+.birthday-chat-avatar img { border-radius: 999px; }
+.birthday-chat-avatar::after {
+  content: "✦";
+  position: absolute;
+  right: -.45rem;
+  top: -.65rem;
+  color: #ffd879;
+  font-size: 1rem;
+  line-height: 1;
+  text-shadow: 0 1px 0 #6f5647;
+}
+.dark body.theme-birthday .birthday-chat-stamp { color: #5d4439; background: #fff0d4; }
+
+/* The illustrated birthday stamp lives in the hero's open upper-right corner. */
+.birthday-hero .birthday-note {
+  position: absolute;
+  z-index: 6;
+  top: 1.25rem;
+  right: 1.4rem;
+  margin: 0;
+}
+
+/* Dark birthday cards keep both the lift and an obvious border-colour change. */
+.dark body.theme-birthday .birthday-hero:hover {
+  border-color: #f4b8c8;
+  box-shadow: 0 32px 74px rgba(0,0,0,.48), 0 0 0 2px rgba(244,184,200,.18);
+}
+.dark body.theme-birthday .birthday-avatar-wrap:hover {
+  background: #e3b4c1;
+  box-shadow: 0 28px 62px rgba(0,0,0,.48);
+}
+
+@media (max-width: 767px) {
+  .birthday-hero .birthday-note {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-inline: auto;
+  }
+}
+
+/* Cake wishes are intentionally richer than ordinary page-click sparkles. */
+.birthday-click-flower {
+  font-weight: 700;
+  text-shadow: 0 2px 0 rgba(255,255,255,.85), 0 5px 10px rgba(92,70,60,.2);
+  animation-name: birthdayFlowerBurst;
+  animation-duration: 1.45s;
+}
+.birthday-cake.is-wishing .cake-candle i {
+  transform-origin: 50% 100%;
+  animation: birthdayFlameWish .25s ease-in-out 4 alternate;
+  filter: saturate(1.25) drop-shadow(0 0 7px rgba(255,196,72,.85));
+}
+.cake-candle i { transition: opacity .18s ease, transform .18s ease; }
+.birthday-cake.is-extinguished .cake-candle i {
+  opacity: 0;
+  transform: translateX(-50%) translateY(.3rem) scale(.15);
+  animation: none;
+  transition: opacity .16s ease, transform .16s ease;
+}
+@keyframes birthdayHatDrift {
+  0%,100% { transform: translateX(-50%) translateY(0) rotate(10deg); }
+  50% { transform: translateX(-50%) translateY(-3px) rotate(9deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .birthday-party-hat { animation: none; }
+}
+@keyframes birthdayFlameWish {
+  0% { transform: translateX(-70%) rotate(-24deg) scale(.78,1.18); }
+  35% { transform: translateX(-40%) rotate(18deg) scale(1.2,.88); }
+  70% { transform: translateX(-62%) rotate(-14deg) scale(.9,1.28); }
+  100% { transform: translateX(-30%) rotate(28deg) scale(1.14,.82); }
+}
+@keyframes birthdayFlowerBurst {
+  0% { opacity: 0; transform: translate(-50%,-50%) rotate(-25deg) scale(.15); }
+  18% { opacity: 1; transform: translate(-50%,-50%) rotate(15deg) scale(1.25); }
+  62% { opacity: 1; transform: translate(calc(-50% + var(--spark-x)),calc(-50% + var(--spark-y))) rotate(125deg) scale(1); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--spark-x)),calc(-50% + var(--spark-y))) rotate(230deg) scale(.55); }
+}

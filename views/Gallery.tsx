@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { photos } from '../src/data/photos';
 import { Camera, X, ArrowUp, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -143,7 +144,7 @@ export const Gallery: React.FC = () => {
       </div>
 
       {/* Image Viewer Modal */}
-      {selectedPhoto && currentPhoto && (
+      {selectedPhoto && currentPhoto && createPortal((
         <div 
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" 
           onClick={closePhotoViewer}
@@ -209,7 +210,7 @@ export const Gallery: React.FC = () => {
           )}
 
         </div>
-      )}
+      ), document.body)}
 
       {/* Back to Top Button */}
       {showBackToTop && (
