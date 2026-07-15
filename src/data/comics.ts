@@ -84,9 +84,11 @@ export const comics: Comic[] = [
     title: "小北遇见熊猫",
     date: "2026-05-03",
     imageUrl: "/images/comic_XiaoBei_Meets_Panda.jpg"
+  },
+  {
+    id: 15,
+    title: "吓唬人",
+    date: "2026-07-15",
+    imageUrl: "/images/comic_吓唬人.jpg"
   }
-
-
-  
- 
 ];
